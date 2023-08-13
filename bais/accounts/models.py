@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
     lightest = models.CharField(max_length = 7, default='#8C8C8C')
     lighter = models.CharField(max_length = 7, default='#626661')
     darker = models.CharField(max_length = 7, default='#4E524D')
-    darkest = models.CharField(max_length = 7 default='#313630')
+    darkest = models.CharField(max_length = 7, default='#313630')
 
     def __str__(self):
         return self.username
