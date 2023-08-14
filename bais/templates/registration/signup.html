@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="section-darker flex-column">
+  <h3>sign up</h3>
+  <form method="post" class="flex-center">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">submit</button>
+  </form>
+</div>
+{% endblock %}

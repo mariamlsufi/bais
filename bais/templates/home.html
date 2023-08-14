@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <section class="section-darker flex-column">
+    <p><a href="{% url 'logout' %}">log out</a></p>
+  </section>
+  <div class="flex-center">
+    <h3> {{ user.app_greeting }}!</h3>
+  </div>
+{% else %}
+  <section class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </section>
+{% endif %}
+{% endblock %}
