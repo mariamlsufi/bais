@@ -7,8 +7,8 @@ class Meals(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
     label = models.CharField(max_length = 50)
-    kcal = models.DecimalField(decimal_places=2)
-    g_protein = models.DecimalField(decimal_places=2)
+    kcal = models.DecimalField(decimal_places=2, max_digits=5)
+    g_protein = models.DecimalField(decimal_places=2, max_digits=5)
 
     protein = models.BooleanField()
     fruit = models.BooleanField()
@@ -26,12 +26,12 @@ class CustomFood(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
     label = models.CharField(max_length = 50)
-    kcal = models.DecimalField(decimal_places=2)
-    g_protein = models.DecimalField(decimal_places=2)
+    kcal = models.DecimalField(decimal_places=2, max_digits=5)
+    g_protein = models.DecimalField(decimal_places=2, max_digits=5)
 
 
 class Foods(models.Model):
     date_added = models.DateTimeField(auto_now=True)
     label = models.CharField(max_length = 50)
-    kcal = models.DecimalField(decimal_places=2)
-    g_protein = models.DecimalField(decimal_places=2)
+    kcal = models.DecimalField(decimal_places=2, max_digits=5)
+    g_protein = models.DecimalField(decimal_places=2, max_digits=5)
