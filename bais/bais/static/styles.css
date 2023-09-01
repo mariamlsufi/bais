@@ -8,11 +8,13 @@
 /* universal styles */
 
 html {
-    margin: 0px;
-    padding: 0px;
     display: flex;
+    align-items: center;
     justify-content: center;
+    margin: 0px;
+    border: 0px;
     text-transform: lowercase;
+    width: 100vw;
 }
 
 body {
@@ -21,7 +23,7 @@ body {
     height: 95vh;
     flex-direction: column;
     min-height: 96vh;
-    max-width: 350px;
+    max-width: 400px;
     display: flex;
     flex-wrap: nowrap;
 }
@@ -38,7 +40,7 @@ body {
 
 p {
     color: var(--lightest);
-    font-size: 16px;
+    font-size: 13px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -124,17 +126,21 @@ h6 {
     justify-content: space-evenly;
 }
 
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
 .width-100 {
     width: 100%;
     padding: 0px;
     margin: 0px;
 }
 
-.no-padding, li {
+.no-padding, li, span {
     padding: 0px;
 }
 
-.no-margin, svg, li {
+.no-margin, svg, li, span {
     margin: 0px;
 }
 
