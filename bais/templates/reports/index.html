@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}account info{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+    {% if reports %}
+        <div class="flex-center">
+            <select id="report-type-selector">
+                <option value="daily">daily</option>
+                <option value="weekly">weekly</option>
+                <option value="monthly">monthly</option>
+                <option value="yearly">yearly</option>
+            </select>
+        </div>
+        {% for report in reports %}
+            <div class="report {{ report.type }} section-darker flex-column">
+                <a class="link-dark" href="/{{report.id}}"> {{ report.start}} > </a>
+                <div class="no-margin no-padding flex-center report-details" >
+                    <div class="no-margin flex-center flex-column">
+                        <h4 class="no-margin">avg lift improvement</h4>
+                        <h1 class="no-margin no-padding">{{ report.avg_improvement }}%</h1>
+                        <h4 class="no-margin">workouts completed</h4> 
+                        <h1 class="no-margin no-padding">{{ report.workouts_completed}}</h1>
+                    </div>
+                    <div class="no-margin  flex-center flex-column">
+                        <h3 class="no-margin no-padding">{{ report.cal_in }} in</h3>
+                        <h3 class="no-margin no-padding">{{ report.cal_out }} out</h3>
+                        <h3 class="no-margin no-padding">{{ report.net }} net</h3>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="section-darker"><p>you don't have any reports yet! check back later.</p></div>
+    {% endif %}
+
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+
+<script>
+    const details = document.querySelectorAll(".report-details");
+    for (let i = 1; i < details.length; i++){
+        details[i].style.display = "none";
+    }
+
+    var functions = {
+        daily: function(){
+            const details = document.querySelectorAll(".d");
+            for (let i = 1; i < details.length; i++){
+                details[i].style.display = "flex";
+            }
+        },
+        weekly: function(){
+            const details = document.querySelectorAll(".w");
+            for (let i = 1; i < details.length; i++){
+                details[i].style.display = "flex";
+            }
+        },
+        monthly: function(){
+            const details = document.querySelectorAll(".m");
+            for (let i = 1; i < details.length; i++){
+                details[i].style.display = "flex";
+            }
+        },
+        yearly: function(){
+            const details = document.querySelectorAll(".y");
+            for (let i = 1; i < details.length; i++){
+                details[i].style.display = "flex";
+            }
+        },
+    }
+
+    $( "select" )
+    .change(function () {
+        const details = document.querySelectorAll(".report");
+        for (let i = 1; i < details.length; i++){
+            details[i].style.display = "none";
+        }
+
+        var selected = $( "select option:selected" );
+        functions[selected.val()]();
+    })
+    .change();
+
+</script>
+{% endblock %}
