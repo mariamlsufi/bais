@@ -10,7 +10,6 @@ urlpatterns = [
 ]
 
 '''
-path('link-device', views.link, name='link-device'),
 path('colors', views.colors, name='colors'),
 path('details', views.details, name='details'),
 path('polices', views.policies, name='policies'),

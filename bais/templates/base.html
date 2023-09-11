@@ -26,6 +26,14 @@
     <header class="h1">bais</header>
 
     <div class="content">
+        {% if user.is_authenticated %}
+            <script>
+                document.documentElement.style.setProperty('--darkest', '{{ user.darkest }}');
+                document.documentElement.style.setProperty('--darker', '{{ user.darker }}');
+                document.documentElement.style.setProperty('--lighter', '{{ user.lighter }}');
+                document.documentElement.style.setProperty('--lightest', '{{ user.lightest }}');
+            </script>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>
