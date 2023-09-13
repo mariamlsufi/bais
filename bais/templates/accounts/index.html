@@ -6,12 +6,7 @@
 {% if user.is_authenticated %}
  <!--- if last used in the middle of a workout-->
   <div class="section-darker">
-    <a class="flex-space flex-center width-100 flex-space no-margin no-padding" href="/link-device">
-        <h5 class="no-margin"> link a fitness device</h5> <p>></p>
-    </a>
-  </div>
-  <div class="section-darker">
-    <a class="flex-between flex-center width-100 flex-space no-margin no-padding" href="/greeting">
+    <a class="flex-between flex-center width-100 flex-space no-margin no-padding" href="/accounts/greeting">
         <h5 class="no-margin"> app greeting</h5> <p>{{ user.app_greeting }} ></p>
     </a>
   </div>
