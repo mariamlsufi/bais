@@ -28,3 +28,9 @@ class GoalsForm(forms.Form):
     grains_goal = forms.IntegerField(label="grains")
 
     cal_goal = forms.IntegerField(label="cal")
+
+class ColorsForms(forms.Form):
+    lightest = forms.CharField(label="lightest")
+    lighter = forms.CharField(label="lighter")
+    darker = forms.CharField(label="darker")
+    darkest = forms.CharField(label="darkest")

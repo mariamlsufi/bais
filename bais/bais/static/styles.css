@@ -296,3 +296,9 @@ header {
 ul, span {
     display: none;
 }
+
+.colors {
+    border-radius: 0px;
+    margin: 0px;
+    padding: 0px;
+}

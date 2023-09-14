@@ -5,14 +5,9 @@
 {% block content %}
 {% if user.is_authenticated %}
  <!--- if last used in the middle of a workout-->
-  <div class="section-darker">
-    <p class="link-dark">resume your last workout ></p>
-    <div class="flex-column">
-      <h2>push</h2>
-    </div>
-  </div>
+  
   <div class="flex-center">
-    <h3> {{ user.app_greeting }}!</h3>
+    <h3> {{ user.app_greeting }}</h3>
   </div>
   <div class="section-darker flex-column">
     <p><a href="{% url 'logout' %}">log out</a></p>
