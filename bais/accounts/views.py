@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
 from .models import CustomUser
-from .forms import GreetingForm
+from .forms import GoalsForm, GreetingForm
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -36,3 +36,31 @@ def Greeting(request):
         form = GreetingForm()
 
     return render(request, "accounts/greeting.html", {"form": form})
+
+def Goals(request):
+    # if this is a POST request we need to process the form data
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    print("id: ", request.user.id)
+    
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = GoalsForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            user.protein_goal = form.cleaned_data['protein_goal']
+            user.fruit_goal = form.cleaned_data['fruit_goal']
+            user.veg_goal = form.cleaned_data['veg_goal']
+            user.dairy_goal = form.cleaned_data['dairy_goal']
+            user.fats_goal = form.cleaned_data['fats_goal']
+            user.grains_goal = form.cleaned_data['grains_goal']
+            user.cal_goal = form.cleaned_data['cal_goal']
+
+            user.save()
+            
+            return HttpResponseRedirect("/accounts")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = GoalsForm()
+
+    return render(request, "accounts/goals.html", {"form": form})

@@ -18,3 +18,13 @@ class CustomUserChangeForm(UserChangeForm):
 
 class GreetingForm(forms.Form):
     greeting = forms.CharField(label="Greeting", max_length=100)
+
+class GoalsForm(forms.Form):
+    protein_goal = forms.DecimalField(label="protein")
+    fruit_goal = forms.IntegerField(label="fruit")
+    veg_goal = forms.IntegerField(label="veg")
+    dairy_goal = forms.IntegerField(label="dairy")
+    fats_goal = forms.IntegerField(label="fats")
+    grains_goal = forms.IntegerField(label="grains")
+
+    cal_goal = forms.IntegerField(label="cal")
