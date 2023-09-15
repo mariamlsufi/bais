@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import Greeting, Goals, Colors, SignUpView
+from .views import Greeting, Goals, Colors, Details, SignUpView
 from django.views.generic.base import TemplateView
 
 
@@ -10,10 +10,11 @@ urlpatterns = [
     path('greeting/', Greeting, name='greeting'),
     path('goals/', Goals, name='goals'),
     path('colors/', Colors, name='colors'),
+    path('details/', Details, name='details'),
+
 
 ]
 
 '''
-path('details', views.details, name='details'),
-path('policies', views.policies, name='policies'),
+forgot password link
 '''

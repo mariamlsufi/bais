@@ -34,3 +34,8 @@ class ColorsForms(forms.Form):
     lighter = forms.CharField(label="lighter")
     darker = forms.CharField(label="darker")
     darkest = forms.CharField(label="darkest")
+
+class ChangeDetails(forms.Form):
+    password = forms.CharField()
+    username = forms.CharField(label="username")
+    email = forms.EmailField(label="email")
