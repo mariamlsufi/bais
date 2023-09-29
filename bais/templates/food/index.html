@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+
+  <!-- todo: changing image, today shortcut button -->
+  <div class="section-darker flex-center flex-column">
+    
+    <h5 id="current-date" onclick="update(new Date())">your food (date)</h5>
+    <div class="flex-space">
+      <div class="no-margin no-padding flex-center flex-column">
+        <h6 class="no-margin no-padding">calories in (kcal)</h6>
+        <h1 class="no-margin no-padding" id="kcal">(NUM)/{{user.cal_goal}}</h1>
+        <h6 class="no-margin no-padding">protein (g)</h6>
+        <h1 class="no-margin no-padding" id="protein_g">(NUM)/{{user.protein_goal_g}}</h1>
+      </div>
+        <img id="meal-img-main" class="meal-img"">
+    </div>
+
+    <div class="width-100 flex-center flex-column">
+      <table id="food-data">
+      </table>
+      <button class="add-button-long">+</button>
+    </div>
+
+    <table style="text-align: left">
+      <tr class="no-margin no-padding">
+        <td id="fruit-check" class="no-margin no-padding"></td>
+        <td id="veg-check" class="no-margin no-padding"><input type="checkbox"> veg (NUM)/{{user.veg_goal}}</td>
+      </tr>
+      <tr class="no-margin no-padding">
+        <td id="protein-check" class="no-margin no-padding"><input type="checkbox"> protein (NUM)/{{user.protein_goal}}</td>
+        <td id="grains-check" class="no-margin no-padding"><input type="checkbox"> grains (NUM)/{{user.grains_goal}}</td>
+      </tr>
+      <tr class="no-margin no-padding">
+        <td id="fats-check" class="no-margin no-padding"><input type="checkbox"> fats (NUM)/{{user.fats_goal}}</td>
+        <td id="dairy-check" class="no-margin no-padding"><input type="checkbox"> dairy (NUM)/{{user.dairy_goal}}</td>
+      </tr>
+    </table>
+
+    <div>
+      <button onclick="previous()" id="previous" class="light-button">previous</button>
+      <button class="dark-button">view stats</button>
+      <button onclick="next()" id="next" class="light-button">next</button>
+
+    </div>
+
+  </div>
+
+<script>
+  async function update(date){
+    console.log("running function")
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+
+    var todaystr = mm + '/' + dd + '/' + yyyy;
+    document.querySelector("#current-date").innerHTML = "your food " + todaystr;
+
+    const response = await fetch("/food/food-data/"+ todaystr + "/");
+    const json = await response.json();
+    // update html
+    document.querySelector("#kcal").innerHTML = json.kcal + "/{{user.cal_goal}}";
+    document.querySelector("#protein_g").innerHTML = json.g_protein + "/{{user.protein_goal_g}}";
+
+    console.log(json.meals);
+    table = document.querySelector('#food-data');
+    table.innerHTML = "";
+    for (let i = 0; i < json.meals.length; i+=3) {
+      table.innerHTML += '<tr><td>' + json.meals[i] + '</td> ' + '<td>' + json.meals[i + 1] + 'kcal</td>' + '<td>' + json.meals[i + 2] + 'g</td> ' +'</tr>'
+    }
+
+    document.querySelector('#fruit-check').innerHTML = "<input type='checkbox'> fruit " + json.fruit + "/{{user.fruit_goal}}";
+    document.querySelector('#protein-check').innerHTML = "<input type='checkbox'> protein " + json.protein + "/{{user.protein_goal}}";
+    document.querySelector('#fats-check').innerHTML = "<input type='checkbox'> fats " + json.fats + "/{{user.fats_goal}}";
+    document.querySelector('#veg-check').innerHTML = "<input type='checkbox'> veg " + json.veg + "/{{user.veg_goal}}";
+    document.querySelector('#grains-check').innerHTML = "<input type='checkbox'> grains " + json.grains + "/{{user.grains_goal}}";
+    document.querySelector('#dairy-check').innerHTML = "<input type='checkbox'> dairy " + json.dairy + "/{{user.dairy_goal}}";
+
+    document.querySelector('#fruit-check > input').checked = json.fruit >= {{user.fruit_goal}};
+    document.querySelector('#protein-check > input').checked = json.protein >= {{user.protein_goal}};
+    document.querySelector('#fats-check > input').checked = json.fats >= {{user.fats_goal}};
+    document.querySelector('#veg-check > input').checked = json.veg >= {{user.veg_goal}};
+    document.querySelector('#grains-check > input').checked = json.grains >= {{user.grains_goal}};
+    document.querySelector('#dairy-check > input').checked = json.dairy >= {{user.dairy_goal}};
+
+    if (json.photos.length != 0)
+      document.querySelector('#meal-img-main').setAttribute("src", json.photos[0]);
+    else
+      document.querySelector('#meal-img-main').removeAttribute("src");
+  }
+
+  // get current data
+  let today = new Date();
+  update(today)
+
+  // function to update data
+  function next(){
+    today.setHours(today.getHours() + 24);
+    update(today)
+  }
+
+  function previous(){
+    today.setHours(today.getHours() - 24);
+    update(today)
+  }
+  
+
+</script>
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}

@@ -20,6 +20,7 @@ class CustomUser(AbstractUser):
     fats_goal = models.IntegerField(default=3)
     protein_goal = models.IntegerField(default=3)
     grains_goal = models.IntegerField(default=3)
+    protein_goal_g = models.IntegerField(default=100)
 
     cal_goal = models.IntegerField(default=2000)
 

@@ -15,6 +15,7 @@ html {
     border: 0px;
     text-transform: lowercase;
     width: 100vw;
+    color: var(--lighter)
 }
 
 body {
@@ -249,12 +250,18 @@ button, .light-button{
     background-color: var(--darkest);
 }
 
-.add-button {
+.add-button, .add-button-long
+{
     font-style: normal;
     font-weight: bold;
     color: var(--darker);
     font-size: 30px;
     height: 35px;
+}
+
+.add-button-long {
+    height: 30px;
+    width: 80%;
 }
 
 /* header and footer */
@@ -301,4 +308,48 @@ ul, span {
     border-radius: 0px;
     margin: 0px;
     padding: 0px;
+}
+
+/* tables */
+table {
+    width: 100%;
+    text-align: center;
+}
+
+tr {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* images */
+.meal-img {
+    max-width: 30%;
+}
+
+/* checkboxes */
+
+input[type='checkbox']:checked {
+    background-color: var(--lightest);
+}
+
+input[type='checkbox']:checked:after {
+    content: '\2713';
+    font-weight: bolder;
+    color:var(--darker);
+}
+
+input[type='checkbox']{
+    text-align: center;
+    vertical-align: middle;
+    width: 20px !important;
+    height: 20px !important;
+    appearance:none;
+    border-radius:50%;
+    border: var(--darkest);
+    background-color: var(--lighter);
+    box-shadow: none;
+    font-size: 1em;
+    content: '\1F784';
+    padding: 0px;
+    margin: 0px;
 }

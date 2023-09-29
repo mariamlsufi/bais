@@ -7,8 +7,8 @@ class Meals(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
     label = models.CharField(max_length = 50)
-    kcal = models.DecimalField(decimal_places=2, max_digits=5)
-    g_protein = models.DecimalField(decimal_places=2, max_digits=5)
+    kcal = models.IntegerField()
+    g_protein = models.IntegerField()
 
     protein = models.BooleanField()
     fruit = models.BooleanField()
@@ -17,7 +17,7 @@ class Meals(models.Model):
     dairy = models.BooleanField()
     fats = models.BooleanField()
 
-    photo =models.FileField(upload_to='uploads/', null=True, blank=True)
+    photo = models.FileField(upload_to='uploads/', null=True, blank=True)
 
     def __str__(self):
         return self.label

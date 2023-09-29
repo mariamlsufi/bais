@@ -11,10 +11,4 @@ urlpatterns = [
     path('goals/', Goals, name='goals'),
     path('colors/', Colors, name='colors'),
     path('details/', Details, name='details'),
-
-
 ]
-
-'''
-forgot password link
-'''

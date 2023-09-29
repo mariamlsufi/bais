@@ -9,9 +9,6 @@
   <div class="flex-center">
     <h3> {{ user.app_greeting }}</h3>
   </div>
-  <div class="section-darker flex-column">
-    <p><a href="{% url 'logout' %}">log out</a></p>
-  </div>
 {% else %}
   <div class="section-darker flex-column">
     <h4>you're not currently logged in</h4>
