@@ -9,8 +9,8 @@
   <div class="section-darker">
     <form action="/accounts/details/" method="post">
         {% csrf_token %} 
-        <label for="email">email:</label>
-        <input  class="colr" name="email" type="email" value="{{user.email}}">
+        <label for="label">email:</label>
+        <input  class="color" name="email" type="email" value="{{user.email}}">
         <label for="username">username:</label>
         <input  class="color" name="username" type="text" value="{{user.username}}">
         <label for="password">password:</label>

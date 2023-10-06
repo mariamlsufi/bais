@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Meals(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date_added = models.DateTimeField(auto_now=True)
+    date_added = models.DateTimeField()
     label = models.CharField(max_length = 50)
     kcal = models.IntegerField()
     g_protein = models.IntegerField()

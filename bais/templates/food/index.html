@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}food{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}  
@@ -16,13 +16,16 @@
         <h6 class="no-margin no-padding">protein (g)</h6>
         <h1 class="no-margin no-padding" id="protein_g">(NUM)/{{user.protein_goal_g}}</h1>
       </div>
-        <img id="meal-img-main" class="meal-img"">
+        <img id="meal-img-main" class="meal-img">
     </div>
 
     <div class="width-100 flex-center flex-column">
-      <table id="food-data">
-      </table>
-      <button class="add-button-long">+</button>
+      <div class="no-margin no-padding" id="food-data-2">
+         <table id="food-data">
+        </table>
+      </div>
+     
+      <button class="add-button-long"><a href="/food/add/">+</a></button>
     </div>
 
     <table style="text-align: left">
@@ -68,8 +71,8 @@
     console.log(json.meals);
     table = document.querySelector('#food-data');
     table.innerHTML = "";
-    for (let i = 0; i < json.meals.length; i+=3) {
-      table.innerHTML += '<tr><td>' + json.meals[i] + '</td> ' + '<td>' + json.meals[i + 1] + 'kcal</td>' + '<td>' + json.meals[i + 2] + 'g</td> ' +'</tr>'
+    for (let i = 0; i < json.meals.length; i+=4) {
+      table.innerHTML += '<tr><td>' + "<a href=/food/edit/" + json.meals[i + 3] + "/ >" + json.meals[i] + '</a> </td> ' + '<td>' + json.meals[i + 1] + 'kcal</td>' + '<td>' + json.meals[i + 2] + 'g</td> ' +'</tr>';
     }
 
     document.querySelector('#fruit-check').innerHTML = "<input type='checkbox'> fruit " + json.fruit + "/{{user.fruit_goal}}";

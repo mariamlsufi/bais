@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}food{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+
+  <!-- todo: changing image, today shortcut button -->
+  <div class="section-darker flex-center flex-column">
+    
+    <form class="no-margin no-padding" action="/food/add/" method="post">
+        {% csrf_token %}
+        
+         <div>
+            <label for="label">label:</label>
+            <input  class="color" name="label" type="text" value="{{meal.label}}"> 
+         </div> 
+         <div class="flex-row flex-space width-100">
+            <div class="no-margin no-padding">
+              <div class="no-margin no-padding">
+                <label class="no-padding" for="kcal">kcal:</label>
+                <input class="no-padding input-short" class="color" name="kcal" type="number" value="{{meal.kcal}}">
+              </div>
+              <div class="no-margin no-padding">
+                <label class="no-padding" for="gprotein">g protein:</label>
+                <input class=" no-padding input-short" class="color" name="gprotein" type="number">
+              </div>
+              <!--<input class=" no-padding input-medium" type="file" name="photo">--->
+            </div>
+              <div class="flex-column no-margin no-padding">
+                <div class="no-margin no-padding">
+                  <label class="no-margin no-padding" for="protein">protein:</label>
+                  <input class="no-margin no-padding" class="" value="protein" type="checkbox" value="" name="checkboxes[]">
+                </div>
+                
+                <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="fruit">fruit:</label>
+                <input class="no-margin no-padding" class="" value="fruit" type="checkbox" value="" name="checkboxes[]">
+              </div>
+              <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="veg">veg:</label>
+                <input class="no-margin no-padding" class="" value="veg" type="checkbox" value="" name="checkboxes[]">
+              </div>
+              <div class="no-margin no-padding">
+                <label  class="no-margin no-padding" for="grains">grains:</label>
+                <input class="no-margin no-padding" class="" value="grains" type="checkbox" value="" name="checkboxes[]">
+              </div>
+              <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="dairy">dairy:</label>
+                <input class="no-margin no-padding" class="" value="dairy" type="checkbox" value="" name="checkboxes[]">
+              </div>
+                
+              <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="fats">fats:</label>
+                <input class="no-margin no-padding" class="" value="fats" type="checkbox" value="" name="checkboxes[]">
+              </div>
+            </div>
+            <input hidden="true" id="currentdate" name="date" type="date">
+           
+         </div>
+
+         <div class="no-margin no-padding flex-center">
+          <div class="no-margin no-padding">
+            <label class="no-margin no-padding" for="lookup_save">save in lookup:</label>
+            <input class="no-margin no-padding" class="" value="lookup_save" type="checkbox" name="checkboxes[]">
+          </div>
+          <input type="submit" value="log!">
+         </div>
+        
+    </form>
+
+    <div class="no-margin no-padding flex-center">
+      <form class="no-margin no-padding" onsubmit="return false">
+        <label for="search">search</label>
+        <input id="search" class="input-medium" name="search" type="text" >
+        <i class="fa fa-search"></i>
+      </form>
+      <div id="food-list" class="no-margin no-padding">
+        <table id="food-data">
+        </table>
+      </div>
+      
+    </div>
+
+  </div>
+
+  <script>
+
+    var date = new Date();
+
+    var day = date.getDate(),
+        month = date.getMonth() + 1,
+        year = date.getFullYear(),
+        hour = date.getHours(),
+        min  = date.getMinutes();
+
+    month = (month < 10 ? "0" : "") + month;
+    day = (day < 10 ? "0" : "") + day;
+    hour = (hour < 10 ? "0" : "") + hour;
+    min = (min < 10 ? "0" : "") + min;
+
+    var today = year + "-" + month + "-" + day, displayTime = hour + ":" + min; 
+
+    document.getElementById('currentdate').value = today;      
+
+    async function update(value){
+      const response = await fetch("/food/all/?q=" + value);
+      const json = await response.json();
+      
+      table = document.querySelector('#food-data');
+      table.innerHTML = "";
+
+      for (let i = 0; i < json.custom_foods.length; i++) {
+        table.innerHTML += '<tr><td>' + json.custom_foods[i][0] + '</td> ' + '<td>' + json.custom_foods[i][1] + 'kcal</td>' + '<td>' + json.custom_foods[i][2] + 'g</td> ' +'</tr>';
+      }
+    }
+
+    update("");
+
+    let input = document.querySelector('#search');
+    input.addEventListener('input', async function() {
+      update(input.value);
+    })
+  </script>
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}food{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+
+  <!-- todo: changing image, today shortcut button -->
+  <div class="section-darker flex-center flex-column">
+    
+    <form class="no-margin no-padding" action="/food/edit/{{meal.pk}}/" method="post">
+        {% csrf_token %}
+        
+         <div>
+            <label for="label">label:</label>
+            <input  class="color" name="label" value="{{meal.label}}" type="text"> 
+         </div>
+         <div class="flex-row flex-space width-100">
+            <div class="no-margin no-padding">
+              <div class="no-margin no-padding">
+                <label class="no-padding" for="kcal">kcal:</label>
+                <input class="no-padding input-short" class="color" value="{{meal.kcal}}" name="kcal" type="number">
+              </div>
+              <div class="no-margin no-padding">
+                <label class="no-padding" for="gprotein">g protein:</label>
+                <input class=" no-padding input-short" class="color" value="{{meal.g_protein}}" name="gprotein" type="number">
+              </div>
+              <!--<input class=" no-padding input-medium" type="file" name="photo">--->
+            </div>
+              <div class="flex-column no-margin no-padding">
+                <div class="no-margin no-padding">
+                  <label class="no-margin no-padding" for="protein">protein:</label>
+                  <input class="no-margin no-padding" class="" value="protein" type="checkbox" value="{{meal.protein}}" name="checkboxes[]">
+                </div>
+                
+                <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="fruit">fruit:</label>
+                <input class="no-margin no-padding" class="" value="fruit" type="checkbox" value="" name="checkboxes[]">
+              </div>
+              <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="veg">veg:</label>
+                <input class="no-margin no-padding" class="" value="veg" type="checkbox" value="" name="checkboxes[]">
+              </div>
+              <div class="no-margin no-padding">
+                <label  class="no-margin no-padding" for="grains">grains:</label>
+                <input class="no-margin no-padding" class="" value="grains" type="checkbox" value="" name="checkboxes[]">
+              </div>
+              <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="dairy">dairy:</label>
+                <input class="no-margin no-padding" class="" value="dairy" type="checkbox" value="" name="checkboxes[]">
+              </div>
+                
+              <div class="no-margin no-padding">
+                <label class="no-margin no-padding" for="fats">fats:</label>
+                <input class="no-margin no-padding" class="" value="fats" type="checkbox" value="" name="checkboxes[]">
+              </div>
+            </div>
+            <input hidden="true" id="currentdate" name="date" type="date">
+           
+         </div>
+
+         <div class="no-margin no-padding flex-center">
+          <div class="no-margin no-padding">
+            <label class="no-margin no-padding" for="lookup_save">save in lookup:</label>
+            <input class="no-margin no-padding" class="" value="lookup_save" type="checkbox" name="checkboxes[]">
+          </div>
+          <input type="submit" value="edit">
+         </div>
+        
+    </form>
+      
+    </div>
+
+  </div>
+
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}

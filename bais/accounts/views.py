@@ -54,7 +54,7 @@ def Goals(request):
             user.fats_goal = form.cleaned_data['fats_goal']
             user.grains_goal = form.cleaned_data['grains_goal']
             user.cal_goal = form.cleaned_data['cal_goal']
-
+            
             user.save()
             
             return HttpResponseRedirect("/accounts")

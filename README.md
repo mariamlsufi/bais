@@ -1,8 +1,13 @@
 to-do:
 
-- view functions for every url
-- template renderings
-- form submission/validation w/ post
-- fetch and display w/ get
-- set up styling to work with custom colors
-- test
+- food progress
+- report pages
+- workout index
+- add/edit workout
+- workout progress
+
+known issues
+- styling in general
+- photo editing
+- checkboxes for edit
+- report index errors
