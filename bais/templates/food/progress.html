@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}food{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+
+  <div class="section-darker flex-center flex-column">
+    
+    <h6>your progress</h6>
+    <h3 class="no-margin no-padding" id="graph-label">cals in</h3>
+
+    <div class="no-margin no-padding" id="chart">
+    </div>
+
+    <select onchange="change()" id="daySelect">
+        <option value="7">last week</option>
+        <option value="14">last two weeks</option>
+        <option value="30">last month</option>
+        <option value="180">last six months</option>
+        <option value="365">last year</option>
+    </select>
+
+    <select onchange="change()" id="typeSelect">
+        <option value="kcal">cals in</option>
+        <option value="g_protein">g protein</option>
+        <option value="protein">protein servings</option>
+        <option value="fruit">fruit servings</option>
+        <option value="veg">veg servings</option>
+        <option value="grains">grains servings</option>
+        <option value="fats">fats servings</option>
+        <option value="dairy">dairy servings</option>
+    </select>
+
+    <h4 id="summary"></h4>
+
+  </div>
+  
+  <script>
+    var goals = {
+      "g_protein": "{{user.protein_goal_g}}",
+      "kcal": "{{user.cal_goal}}",
+      "protein": "{{user.protein_goal}}",
+      "fruit": "{{user.fruit_goal}}",
+      "veg": "{{user.veg_goal}}",
+      "dairy": "{{user.dairy_goal}}",
+      "grains": "{{user.grains_goal}}",
+      "fat": "{{user.fat_goal}}",
+
+    }
+
+    Apex.colors = ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+    var options = {
+          series: [{
+          data: []
+        }],
+          chart: {
+          type: 'bar',
+          height: 200,
+          toolbar: {
+            show: false,
+          }
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false,
+          style: {
+            colors: ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+          }
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          labels: {
+            show: false,
+          }
+        },
+        yaxis: {
+          style: {
+            colors: ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          enabled: false,
+        },
+        legend: {
+          show: false,
+        },
+        grid: {
+          show: false,
+        }
+        };
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+
+    async function change(){
+      var days = document.getElementById("daySelect").value;
+      var type = document.getElementById("typeSelect").value;
+      const response = await fetch("/food/progress/data/?days=" + days);
+      const json = await response.json();
+
+      chart_data = [];
+      var sum = 0;
+      for (var i = json["data"].length - 1; i >= 0; i--){
+        chart_data.push(json["data"][i][type]);
+        sum +=  json["data"][i][type];
+      }
+
+      chart.updateSeries([{
+        data: chart_data,
+      }])
+
+      console.log(goals);
+      console.log(type);
+
+      document.getElementById("summary").innerHTML = "average: " + Math.round(sum/days) + "/" + goals[type];
+      document.getElementById("graph-label").innerHTML = type;
+    }
+
+    change();
+
+  </script>
+
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}
