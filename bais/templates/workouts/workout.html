@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}workout{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+
+  <!-- todo: changing image, today shortcut button -->
+  <form class="section-darker flex-center flex-column" action="" method="post">
+    
+    {% csrf_token %} 
+
+    <h4>{{workout.label}}</h4>
+
+    {% for exercise in exercises %}
+        <div class="flex-column" style="width: 90%">
+           <div class="no-margin no-padding">
+            <input type="checkbox"> {{exercise.label}}
+            <input type="number" name="{{exercise.label}}_reps" class="input-shortest"> x <input type="number" name="{{exercise.label}}_intensity" class="input-shortest"> ({{exercise.units}})
+           </div>
+    
+            {% for set in exercise.sets %}
+            <div class="flex-column no-margin no-padding">
+                <div class="no-margin no-padding">
+                    &emsp; <input type="checkbox"> {{set.reps}} x {{set.intensity}} {{exercise.units}}
+                   </div>
+                
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <div class="flex-row">
+        <button><a href="edit/">full edit</a></button>
+        <input type="submit" class="dark-button" value="finished!">
+        <button>quick edit</button>
+    </div>
+      
+    </div>
+
+</form>
+
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}

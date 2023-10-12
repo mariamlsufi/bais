@@ -8,7 +8,7 @@ from django.conf import settings
 
 class Workouts(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    label = models.CharField(max_length=50, unique=True)
+    label = models.CharField(max_length=50)
     svg = models.TextField()
 
     rel_exercises = models.ManyToManyField('Exercises')
@@ -37,7 +37,6 @@ class Exercises(models.Model):
 class Sets(models.Model):
     workout = models.ForeignKey(Workouts,  on_delete=models.CASCADE)
     exercise = models.ForeignKey(Exercises,  on_delete=models.CASCADE)
-    set_number = models.IntegerField()
     reps = models.IntegerField()
     intensity = models.DecimalField(decimal_places=2, max_digits=5)
 
