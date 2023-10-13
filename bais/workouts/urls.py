@@ -1,13 +1,13 @@
 from django.urls import path
 
-from .views import Workout
+from .views import Index, Workout
 
 urlpatterns = [
     path('<int:pk>/', Workout, name='workout'),
+    path('', Index, name='index'),
 ]
 
 '''
-path('', views.index, name='index'),
 path('add', views.add, name='add'),
 path('progress', views.progress, name='progress'),
 path('<int:pk>/edit', views.edit, name='edit'),

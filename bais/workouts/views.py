@@ -4,9 +4,6 @@ from django.shortcuts import get_object_or_404, render
 from accounts.models import CustomUser
 from .models import Bests, Exercises, Sets, Workouts
 
-def setSort(a, b):
-    return (a.set_number > b.set_number)
-
 # Create your views here.
 def Workout(request, pk):
     user = get_object_or_404(CustomUser, id=request.user.id)
@@ -45,3 +42,10 @@ def Workout(request, pk):
         exercise_info.append(dict)
 
     return render(request, "workouts/workout.html", {"workout": workout, "exercises":exercise_info})
+
+def Index(request):
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    workouts = Workouts.objects.filter(user=user)
+
+    return render(request, "workouts/index.html", {"workouts": workouts})
+    
