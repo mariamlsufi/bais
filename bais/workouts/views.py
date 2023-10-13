@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+from datetime import datetime, timedelta
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 
 from accounts.models import CustomUser
@@ -48,4 +49,38 @@ def Index(request):
     workouts = Workouts.objects.filter(user=user)
 
     return render(request, "workouts/index.html", {"workouts": workouts})
-    
+
+def ProgressData(request):
+
+    # get user and days
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    days = request.GET.get('days', 0)
+
+    progress_data = []
+
+    for i in range(int(days)):
+        curr_date = datetime.today() - timedelta(days=i)
+        bests = Bests.objects.filter(user=user, date_added__year=curr_date.year, date_added__month=curr_date.month, date_added__day=curr_date.day)
+        exercises_dict = {}
+
+        for best in bests:
+            exercises_dict[best.exercise.label] = best.reps * best.intensity
+        
+        progress_data.append(exercises_dict)
+
+        
+    # json response
+    return JsonResponse({'data': progress_data})
+
+def Progress(request):
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    workouts = Workouts.objects.filter(user=user)
+    data = []
+    for workout in workouts:
+        exercises = workout.rel_exercises.all()
+        for exercise in exercises:
+            data.append(exercise.label)
+
+    print(data)
+
+    return render(request, "workouts/progress.html", {"exercises": data})

@@ -42,3 +42,4 @@ class Sets(models.Model):
 
 class Bests(Sets):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date_added = models.DateField(auto_now=True)

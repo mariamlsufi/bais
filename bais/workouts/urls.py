@@ -1,14 +1,15 @@
 from django.urls import path
 
-from .views import Index, Workout
+from .views import Index, Progress, ProgressData, Workout
 
 urlpatterns = [
     path('<int:pk>/', Workout, name='workout'),
     path('', Index, name='index'),
+    path('progress/data/', ProgressData, name='progress'),
+    path('progress/', Progress, name='progress'),
 ]
 
 '''
 path('add', views.add, name='add'),
-path('progress', views.progress, name='progress'),
 path('<int:pk>/edit', views.edit, name='edit'),
 '''
