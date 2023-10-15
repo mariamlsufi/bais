@@ -238,6 +238,24 @@ label {
     font-size: 16px;
 }
 
+.input-text-2-dark, .input-text-2-light {
+    background-color: var(--darker);
+    border-bottom: solid 2px var(--lightest);
+    border-radius: 0px;
+    color: var(--lightest)
+}
+
+.input-text-2-dark {
+    border-bottom: solid 2px var(--darkest);
+    color: var(--darkest);
+    font-style: italic;
+    font-weight: bold;
+}
+
+::placeholder {
+    color: var(--darkest)
+}
+
 /* buttons */
 input[type="submit"], button {
     background-color: var(--darkest);

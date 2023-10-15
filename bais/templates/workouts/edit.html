@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}workout{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+
+<form class="section-darker flex-center flex-column" onsubmit="" method="post">
+    {% csrf_token %}
+    
+    <input type="text" class="input-text-2-dark input-medium" placeholder="title" name="workout_label" value="{{workout.label}}">
+    <select name="icon">
+        <option value="0">push icon</option>
+        <option value="1">pull icon </option>
+        <option value="2">legs icon</option>
+    </select>
+
+   <div class="exercises no-margin no-padding">
+    <div class="exercise-set" style="display: none;">
+        <div class="exercise no-margin no-padding">
+            <input type="checkbox">
+        <input type="text" name="exercise_name" class="input-text-2-light input-medium" value="">
+        <select name="num_sets" onchange="javascript:changeSets(this)" class="input-short sets">
+            <option value="1">1 set</option>
+            <option value="2">2 set</option>
+            <option value="3">3 set</option>
+            <option value="4">4 set</option>
+            <option value="5">5 set</option>
+            <option value="6">6 set</option>
+            <option value="7">7 set</option>
+            <option value="8">8 set</option>
+            <option value="9">9 set</option>
+            <option value="10">20 set</option>
+            <option value="11">11 set</option>
+            <option value="12">12 set</option>
+            <option value="13">13 set</option>
+            <option value="14">14 set</option>
+            <option value="15">15 set</option>
+            
+        </select>
+        x
+        <select name="units">
+            <option value="bw+">bw+</option>
+            <option value="bw">bw</option>
+            <option value="lbs">lbs</option>
+            <option value="kg">kg</option>
+        </select>
+        <button type="button" class="fa fa-trash" onclick="javascript:deleteExercise(this)"></button>
+
+        </div>
+        <div class="set">
+            <input type="checkbox">
+            <input name="set_reps" class="input-shortest input-text-2-light" value="0" type="number">
+            reps x  
+            <input name="set_intensity" class="input-shortest input-text-2-light" value="0" type="number">
+            intensity
+        </div>
+
+
+    </div>
+
+    {% for exercise in exercises %}
+    <div class="exercise-set">
+        <div class="exercise no-margin no-padding">
+            <input type="checkbox">
+        <input name="exercise_name" type="text" class="input-text-2-light input-medium" value="{{exercise.label}}">
+        <select value="{{exercise.num_sets}}" name="num_sets" onchange="javascript:changeSets(this)" class="input-short sets">
+            <option value="1">1 set</option>
+            <option value="2">2 set</option>
+            <option value="3">3 set</option>
+            <option value="4">4 set</option>
+            <option value="5">5 set</option>
+            <option value="6">6 set</option>
+            <option value="7">7 set</option>
+            <option value="8">8 set</option>
+            <option value="9">9 set</option>
+            <option value="10">20 set</option>
+            <option value="11">11 set</option>
+            <option value="12">12 set</option>
+            <option value="13">13 set</option>
+            <option value="14">14 set</option>
+            <option value="15">15 set</option>
+            
+        </select>
+        x
+        <select name="units" value="{{set.units}}">
+            <option value="bw+">bw+</option>
+            <option value="bw">bw</option>
+            <option value="lbs">lbs</option>
+            <option value="kg">kg</option>
+        </select>
+        <button type="button" class="fa fa-trash" onclick="javascript:deleteExercise(this)"></button>
+
+        </div>
+
+        {% for set in exercise.sets %}
+        <div class="set">
+            <input type="checkbox">
+            <input name="set_reps" class="input-shortest input-text-2-light" value="{{set.reps}}" type="number">
+            reps x  
+            <input name="set_intensity" class="input-shortest input-text-2-light" value="{{set.intensity}}" type="number">
+            intensity
+        </div>
+        {% endfor %}
+
+
+    </div>
+    {% endfor %}
+   </div>
+
+    <button type="button" class="add_exercise" class="light-button" onclick="addExercise()">
+        add exercise +
+    </button>
+
+    <input type="submit" value="save workout">
+
+</form>
+
+<script>
+    function addExercise(){
+        console.log("running")
+        exerciseDiv = document.querySelector(".exercise-set")
+        var clone = exerciseDiv.cloneNode(true);
+        clone.style["display"] = "block";
+        document.querySelector(".exercises").appendChild(clone)
+    }
+
+    function deleteExercise(e) {
+        e.parentNode.parentNode.remove()
+    };
+
+    function changeSets(e) {
+        var node = e.parentNode.parentNode
+        var sets = node.querySelectorAll(".set");
+        console.log("values", sets.length, e.value)
+        for (var i = 0; i < sets.length; i++){
+            sets[i].remove()
+        }
+        for (var i = 0; i < e.value; i++){
+            node.append(document.querySelector(".set").cloneNode(true))
+        }
+    }
+
+</script>
+
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}

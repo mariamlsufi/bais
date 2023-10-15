@@ -1,6 +1,5 @@
 to-do:
 
-- add/edit workout
 - individual report pages w/ graphs
 
 -------------------
@@ -38,3 +37,6 @@ known issues (post mvp)
 
 - index error w/ mariamlsufi acct
 - reset to default colors button
+
+- sets messed up on edit, icon changing on edit
+- autopopulating all with the same value as first when changing number of sets
