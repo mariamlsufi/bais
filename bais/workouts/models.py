@@ -10,6 +10,7 @@ class Workouts(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     label = models.CharField(max_length=50)
     svg = models.TextField()
+    date_used = models.DateField(auto_now = True, null=False)
 
     rel_exercises = models.ManyToManyField('Exercises')
 

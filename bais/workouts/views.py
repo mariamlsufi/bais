@@ -21,6 +21,9 @@ def Workout(request, pk):
             best.intensity = request.POST.get(exercise.label + "_intensity", 0)
             best.save()
 
+            workout.date_used = datetime.today()
+            workout.save()
+
         return HttpResponseRedirect("/workouts/")  
     
     if (workout.user != user):
@@ -84,3 +87,4 @@ def Progress(request):
     print(data)
 
     return render(request, "workouts/progress.html", {"exercises": data})
+

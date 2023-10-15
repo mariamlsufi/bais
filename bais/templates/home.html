@@ -7,8 +7,125 @@
  <!--- if last used in the middle of a workout-->
   
   <div class="flex-center">
-    <h3> {{ user.app_greeting }}</h3>
+    <h3> {{ greeting }}</h3>
   </div>
+
+  <div class="section-darker flex-center flex-row" action="" method="post">
+    {% for workout in workouts %}
+        <div class="no-margin">
+            <h6 class="no-margin no-padding"><a href="{{workout.pk}}/">{{ workout.label}} ></a></h6>
+            <div class="flex-center flex-column dark-button" style="border-radius: 1.3rem">
+              <a class="no-margin no-padding" href="{{workout.pk}}/">{{workout.svg |safe}}</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+  <div class="section-darker flex-center flex-column">
+    
+    <div class="flex-space no-margin no-padding">
+      <div class="no-margin no-padding flex-center flex-row">
+        <div class="no-padding">
+          <h6 class="no-margin no-padding">calories in (kcal)</h6>
+          <h1 class="no-margin no-padding" id="kcal">(NUM)/{{user.cal_goal}}</h1>
+        </div>
+        <div class="no-padding">
+          <h6 class="no-margin no-padding">protein (g)</h6>
+        <h1 class="no-margin no-padding" id="protein_g">(NUM)/{{user.protein_goal_g}}</h1>
+        </div>
+      </div>
+        <img id="meal-img-main" class="meal-img">
+    </div>
+
+    <div class="width-100 flex-center flex-column">
+      <div class="no-margin no-padding" id="food-data-2" style="max-height: 8vh">
+         <table id="food-data">
+        </table>
+      </div>
+     
+      <button class="add-button-long"><a href="/food/add/">+</a></button>
+    </div>
+
+  </div>
+
+  {% if report %}
+  <div class="report {{ report.type }} section-darker flex-column">
+    <a class="link-dark" href="/{{report.id}}"> {{ report.start}} > </a>
+    <div class="no-margin no-padding flex-center report-details" >
+        <div class="no-margin flex-center flex-column">
+            <h4 class="no-margin">avg lift improvement</h4>
+            <h1 class="no-margin no-padding">{{ report.avg_improvement }}%</h1>
+            <h4 class="no-margin">workouts completed</h4> 
+            <h1 class="no-margin no-padding">{{ report.workouts_completed}}</h1>
+        </div>
+        <div class="no-margin  flex-center flex-column">
+            <h3 class="no-margin no-padding">{{ report.cal_in }} in</h3>
+            <h3 class="no-margin no-padding">{{ report.cal_out }} out</h3>
+            <h3 class="no-margin no-padding">{{ report.net }} net</h3>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+  async function update(date){
+    console.log("running function")
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+
+    var todaystr = mm + '/' + dd + '/' + yyyy;
+
+    const response = await fetch("/food/food-data/"+ todaystr + "/");
+    const json = await response.json();
+    // update html
+    document.querySelector("#kcal").innerHTML = json.kcal + "/{{user.cal_goal}}";
+    document.querySelector("#protein_g").innerHTML = json.g_protein + "/{{user.protein_goal_g}}";
+
+    console.log(json.meals);
+    table = document.querySelector('#food-data');
+    table.innerHTML = "";
+    for (let i = 0; i < json.meals.length; i+=4) {
+      table.innerHTML += '<tr><td>' + "<a href=/food/edit/" + json.meals[i + 3] + "/ >" + json.meals[i] + '</a> </td> ' + '<td>' + json.meals[i + 1] + 'kcal</td>' + '<td>' + json.meals[i + 2] + 'g</td> ' +'</tr>';
+    }
+
+    document.querySelector('#fruit-check').innerHTML = "<input type='checkbox'> fruit " + json.fruit + "/{{user.fruit_goal}}";
+    document.querySelector('#protein-check').innerHTML = "<input type='checkbox'> protein " + json.protein + "/{{user.protein_goal}}";
+    document.querySelector('#fats-check').innerHTML = "<input type='checkbox'> fats " + json.fats + "/{{user.fats_goal}}";
+    document.querySelector('#veg-check').innerHTML = "<input type='checkbox'> veg " + json.veg + "/{{user.veg_goal}}";
+    document.querySelector('#grains-check').innerHTML = "<input type='checkbox'> grains " + json.grains + "/{{user.grains_goal}}";
+    document.querySelector('#dairy-check').innerHTML = "<input type='checkbox'> dairy " + json.dairy + "/{{user.dairy_goal}}";
+
+    document.querySelector('#fruit-check > input').checked = json.fruit >= {{user.fruit_goal}};
+    document.querySelector('#protein-check > input').checked = json.protein >= {{user.protein_goal}};
+    document.querySelector('#fats-check > input').checked = json.fats >= {{user.fats_goal}};
+    document.querySelector('#veg-check > input').checked = json.veg >= {{user.veg_goal}};
+    document.querySelector('#grains-check > input').checked = json.grains >= {{user.grains_goal}};
+    document.querySelector('#dairy-check > input').checked = json.dairy >= {{user.dairy_goal}};
+
+    if (json.photos.length != 0)
+      document.querySelector('#meal-img-main').setAttribute("src", json.photos[0]);
+    else
+      document.querySelector('#meal-img-main').removeAttribute("src");
+  }
+
+  // get current data
+  let today = new Date();
+  update(today)
+
+  // function to update data
+  function next(){
+    today.setHours(today.getHours() + 24);
+    update(today)
+  }
+
+  function previous(){
+    today.setHours(today.getHours() - 24);
+    update(today)
+  }
+  
+
+</script>
 {% else %}
   <div class="section-darker flex-column">
     <h4>you're not currently logged in</h4>

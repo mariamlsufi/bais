@@ -1,9 +1,7 @@
 to-do:
 
-- workout index
 - add/edit workout
-- workout progress
-- individual report pages
+- individual report pages w/ graphs
 
 -------------------
 
@@ -23,3 +21,20 @@ known issues (post mvp)
 - add in urls
 - commenting everything well, taking out unnecessary things
 - changing average if someone didn't log that day for food progress
+
+(workouts index)
+- resume workout
+- workouts ordered by most recently used
+- graph shown on the workouts index
+
+- field validation or default vals
+
+- better progress graph and log
+- fix averages
+- home button indicator switching
+
+(reports)
+- periodically generating reports and adding to database
+
+- index error w/ mariamlsufi acct
+- reset to default colors button
