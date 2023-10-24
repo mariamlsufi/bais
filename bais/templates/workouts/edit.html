@@ -5,21 +5,23 @@
 {% block content %}
 {% if user.is_authenticated %}  
 
-<form class="section-darker flex-center flex-column" onsubmit="" method="post">
+<form class="section center flex-column" onsubmit="" method="post">
     {% csrf_token %}
     
-    <input type="text" class="input-text-2-dark input-medium" placeholder="title" name="workout_label" value="{{workout.label}}">
+    <input type="text" class="input-text-2-dark input-medium" name="workout_label" placeholder="name">
     <select name="icon">
         <option value="0">push icon</option>
         <option value="1">pull icon </option>
         <option value="2">legs icon</option>
     </select>
 
+    <br>
+
    <div class="exercises no-margin no-padding">
     <div class="exercise-set" style="display: none;">
         <div class="exercise no-margin no-padding">
             <input type="checkbox">
-        <input type="text" name="exercise_name" class="input-text-2-light input-medium" value="">
+        <input type="text" name="exercise_name" class="input-text-2-light input-medium" placeholder="name">
         <select name="num_sets" onchange="javascript:changeSets(this)" class="input-short sets">
             <option value="1">1 set</option>
             <option value="2">2 set</option>
@@ -50,9 +52,9 @@
         </div>
         <div class="set">
             <input type="checkbox">
-            <input name="set_reps" class="input-shortest input-text-2-light" value="0" type="number">
+            <input name="set_reps" class="input-short input-text-2-light" value="0" type="number">
             reps x  
-            <input name="set_intensity" class="input-shortest input-text-2-light" value="0" type="number">
+            <input name="set_intensity" class="input-short input-text-2-light" value="0" type="number">
             intensity
         </div>
 
@@ -63,7 +65,7 @@
     <div class="exercise-set">
         <div class="exercise no-margin no-padding">
             <input type="checkbox">
-        <input name="exercise_name" type="text" class="input-text-2-light input-medium" value="{{exercise.label}}">
+        <input name="exercise_name" type="text" class="input-text-2-light input-short" placeholder="name"">
         <select value="{{exercise.num_sets}}" name="num_sets" onchange="javascript:changeSets(this)" class="input-short sets">
             <option value="1">1 set</option>
             <option value="2">2 set</option>
@@ -83,7 +85,7 @@
             
         </select>
         x
-        <select name="units" value="{{set.units}}">
+        <select name="units" value="{{set.units}}" class="input-short">
             <option value="bw+">bw+</option>
             <option value="bw">bw</option>
             <option value="lbs">lbs</option>
@@ -95,22 +97,26 @@
 
         {% for set in exercise.sets %}
         <div class="set">
+            &emsp; 
             <input type="checkbox">
-            <input name="set_reps" class="input-shortest input-text-2-light" value="{{set.reps}}" type="number">
+            <input name="set_reps" class="input-short input-text-2-light" value="{{set.reps}}" type="number">
             reps x  
-            <input name="set_intensity" class="input-shortest input-text-2-light" value="{{set.intensity}}" type="number">
-            intensity
+            <input name="set_intensity" class="input-short input-text-2-light" value="{{set.intensity}}" type="number">
+            {{set.units}}
         </div>
         {% endfor %}
 
-
+     <br>
     </div>
     {% endfor %}
+
    </div>
 
-    <button type="button" class="add_exercise" class="light-button" onclick="addExercise()">
+    <button type="button" class="light-button" onclick="addExercise()">
         add exercise +
     </button>
+
+    <br>
 
     <input type="submit" value="save workout">
 

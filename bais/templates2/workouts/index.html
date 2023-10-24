@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}workout{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}  
+  <!-- todo: changing image, today shortcut button -->
+  <div class="section-darker flex-center flex-row" action="" method="post">
+    {% for workout in workouts %}
+        <div class="no-margin">
+            <h6 class="no-margin no-padding"><a href="{{workout.pk}}/">{{ workout.label}} ></a></h6>
+            <div class="flex-center flex-column dark-button" style="border-radius: 1.3rem">
+              <a class="no-margin no-padding" href="{{workout.pk}}/">{{workout.svg |safe}}</a>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="no-margin">
+        <h6 class="no-margin no-padding"><a href="add/">add ></a></h6>
+        <div class="no-padding no-margin flex-center flex-column dark-button" style="border-radius: 1.3rem;">
+           <div class="flex-center no-padding" style="color: var(--lightest); font-size: 50px; font-weight: bold;  width: 5vw;"><a class="no-margin no-padding" href="add/">+</a></div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+  <div class="section-darker flex-column">
+    <h4>you're not currently logged in</h4>
+    <a class="light-button" href="{% url 'login' %}">log in</a>
+  </div>
+{% endif %}
+{% endblock %}

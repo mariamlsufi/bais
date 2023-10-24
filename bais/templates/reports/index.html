@@ -15,19 +15,20 @@
             </select>
         </div>
         {% for report in reports %}
-            <div class="report {{ report.type }} section-darker flex-column">
-                <a class="link-dark" href="/{{report.id}}"> {{ report.start}} > </a>
-                <div class="no-margin no-padding flex-center report-details" >
-                    <div class="no-margin flex-center flex-column">
-                        <h4 class="no-margin">avg lift improvement</h4>
-                        <h1 class="no-margin no-padding">{{ report.avg_improvement }}%</h1>
-                        <h4 class="no-margin">workouts completed</h4> 
-                        <h1 class="no-margin no-padding">{{ report.workouts_completed}}</h1>
+            <div class="report {{ report.type }} section flex-column center">
+                <a href="{{report.id}}/"> {{ report.start}} > </a>
+                <br>
+                <div class="center report-details flex-row" >
+                    <div class="flex-center flex-column center">
+                        <div class="label-text" style="text-align: center; margin-left: 5px;">avg improvement</div>
+                       <div class="dark-stylized big-text">{{ report.avg_improvement }}%</div>
                     </div>
-                    <div class="no-margin  flex-center flex-column">
-                        <h3 class="no-margin no-padding">{{ report.cal_in }} in</h3>
-                        <h3 class="no-margin no-padding">{{ report.cal_out }} out</h3>
-                        <h3 class="no-margin no-padding">{{ report.net }} net</h3>
+                    <div class="flex-center flex-column center">
+                        <div class="label-text"  style="text-align: center; margin-left: 5px;">workouts complete</div>
+                        <div class="dark-stylized big-text">{{ report.workouts_completed }} </div>
+                    </div>
+                    <div class="center flex-column light-stylized big-text">
+                        {{ report.cal_in }} kcal
                     </div>
                 </div>
             </div>

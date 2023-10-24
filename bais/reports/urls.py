@@ -5,7 +5,7 @@ from .views import index
 
 urlpatterns = [
     #send report data to function as well
-    path('', index, name='index')
+    path('', index, name='reports_index')
 ]
 
 '''

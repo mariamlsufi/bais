@@ -3,49 +3,75 @@
 {% block title %}food{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}  
-
   <!-- todo: changing image, today shortcut button -->
-  <div class="section-darker flex-center flex-column">
-    
-    <h5 id="current-date" onclick="update(new Date())">your food (date)</h5>
-    <div class="flex-space">
-      <div class="no-margin no-padding flex-center flex-column">
-        <h6 class="no-margin no-padding">calories in (kcal)</h6>
-        <h1 class="no-margin no-padding" id="kcal">(NUM)/{{user.cal_goal}}</h1>
-        <h6 class="no-margin no-padding">protein (g)</h6>
-        <h1 class="no-margin no-padding" id="protein_g">(NUM)/{{user.protein_goal_g}}</h1>
+  <div class="section center">
+
+    <a class="back" href="{% url 'home' %}">< back</a>
+    <div class="center">
+      <div class="alt-label-text center flex-column" id="current-date" onclick="update(new Date())">add food</div>
+    </div>
+      
+    <div class="flex-row width-100 center">
+
+      <div class="center flex-column margin">
+        <div class="flex-row">
+          <input type="checkbox">
+          <p class="label-text">&nbsp;cal in</p>
+        </div>
+        <div class="dark-stylized big-text no-margin" id="kcal"></div>
+        <div class="dark-label-text">goal:{{user.cal_goal}}</div>
       </div>
-        <img id="meal-img-main" class="meal-img">
+
+      <div class="center flex-column margin">
+        <div class="flex-row center">
+          <input type="checkbox">
+          <p class="label-text">&nbsp;protein</p>
+        </div>
+        <div class="dark-stylized big-text no-margin" id="protein_g"></div>
+        <div class="dark-label-text">goal:{{user.protein_goal_g}}</div>
+      </div>
+  
+      <div style="background-color: var(--darkest); height: 100%; margin: 10px; border-radius: 10px;">
+        (photo filler)
+      </div>
+      
     </div>
 
-    <div class="width-100 flex-center flex-column">
-      <div class="no-margin no-padding" id="food-data-2">
+    <br>
+
+    <div class="width-100 center flex-column">
+      <div id="food-data-2">
          <table id="food-data">
         </table>
       </div>
+
+      <br>
      
-      <button class="add-button-long"><a href="/food/add/">+</a></button>
+      <a class="width-80 center dark-button bold big-text" href="{% url 'food-add' %}">+</a>
     </div>
 
-    <table style="text-align: left">
-      <tr class="no-margin no-padding">
-        <td id="fruit-check" class="no-margin no-padding"></td>
-        <td id="veg-check" class="no-margin no-padding"><input type="checkbox"> veg (NUM)/{{user.veg_goal}}</td>
+    <br>
+
+    <table class="label-text width-100 center" style="text-align: left">
+      <tr>
+        <td id="fruit-check" ></td>
+        <td id="veg-check" ><input type="checkbox"> veg (NUM)/{{user.veg_goal}}</td>
       </tr>
       <tr class="no-margin no-padding">
-        <td id="protein-check" class="no-margin no-padding"><input type="checkbox"> protein (NUM)/{{user.protein_goal}}</td>
-        <td id="grains-check" class="no-margin no-padding"><input type="checkbox"> grains (NUM)/{{user.grains_goal}}</td>
+        <td id="protein-check"><input type="checkbox"> protein (NUM)/{{user.protein_goal}}</td>
+        <td id="grains-check"><input type="checkbox"> grains (NUM)/{{user.grains_goal}}</td>
       </tr>
       <tr class="no-margin no-padding">
-        <td id="fats-check" class="no-margin no-padding"><input type="checkbox"> fats (NUM)/{{user.fats_goal}}</td>
-        <td id="dairy-check" class="no-margin no-padding"><input type="checkbox"> dairy (NUM)/{{user.dairy_goal}}</td>
+        <td id="fats-check" ><input type="checkbox"> fats (NUM)/{{user.fats_goal}}</td>
+        <td id="dairy-check" ><input type="checkbox"> dairy (NUM)/{{user.dairy_goal}}</td>
       </tr>
     </table>
 
-    <div>
+    <br>
+
+    <div class="flex-around width-100">
       <button onclick="previous()" id="previous" class="light-button">previous</button>
-      <button class="dark-button"><a href="/food/progress/">view stats</a></button>
+      <a href="{% url 'food-progress' %}"><button class="dark-button">view stats</button></a>
       <button onclick="next()" id="next" class="light-button">next</button>
 
     </div>
@@ -60,13 +86,13 @@
     var yyyy = date.getFullYear();
 
     var todaystr = mm + '/' + dd + '/' + yyyy;
-    document.querySelector("#current-date").innerHTML = "your food " + todaystr;
+    document.querySelector("#current-date").innerHTML = "<div>your food</div><div>" + todaystr + "</div";
 
     const response = await fetch("/food/food-data/"+ todaystr + "/");
     const json = await response.json();
     // update html
-    document.querySelector("#kcal").innerHTML = json.kcal + "/{{user.cal_goal}}";
-    document.querySelector("#protein_g").innerHTML = json.g_protein + "/{{user.protein_goal_g}}";
+    document.querySelector("#kcal").innerHTML = json.kcal + "kcal";
+    document.querySelector("#protein_g").innerHTML = json.g_protein  + "g";
 
     console.log(json.meals);
     table = document.querySelector('#food-data');
@@ -112,10 +138,5 @@
   
 
 </script>
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
+
 {% endblock %}

@@ -2,34 +2,38 @@
 
 {% block title %}food{% endblock %}
 
-{% block content %}
-{% if user.is_authenticated %}  
- 
-  <div class="section-darker flex-center flex-column">
-    
-    <h6>your progress</h6>
-    <h3 class="no-margin no-padding" id="graph-label">cals in</h3>
+{% block content %} 
+  <div class="section center flex-column">
 
-    <div class="no-margin no-padding" id="chart">
+    <a class="back" href="{% url 'workouts_index' %}">< back</a>
+    <div class="center">
+      <div class="alt-label-text">your progress</div>
     </div>
 
-    <select onchange="change()" id="daySelect">
+    <div class="light-stylized big-text no-margin" id="graph-label"></div>
+
+    <div class="" id="chart">
+    </div>
+
+    <div class="flex-row">
+      <select onchange="change()" id="daySelect">
         <option value="7">last week</option>
         <option value="14">last two weeks</option>
         <option value="30">last month</option>
         <option value="180">last six months</option>
         <option value="365">last year</option>
-    </select>
+      </select>
 
-    <select onchange="change()" id="typeSelect">
-        {% for exercise in exercises %}
-            <option value="{{exercise}}">{{exercise}}</option>
-        {% endfor %}
-    </select>
+      <select onchange="change()" id="typeSelect">
+          {% for exercise in exercises %}
+              <option value="{{exercise}}">{{exercise}}</option>
+          {% endfor %}
+      </select>
+    </div>
 
-    <h4 id="summary"></h4>
+    <div class="dark-stylized big-text" id="summary"></div>
 
-    <p class="no-margin no-padding">measured in volume: reps x intensity</p>
+    <div class="label-text width-80 center" style="text-align: center;">measured in volume: reps x intensity</div>
 
 
   </div>
@@ -126,11 +130,4 @@
     change();
 
   </script>
-
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
 {% endblock %}

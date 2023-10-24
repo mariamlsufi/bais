@@ -2,80 +2,95 @@
 
 {% block title %}food{% endblock %}
 
-{% block content %}
-{% if user.is_authenticated %}  
+{% block content %} 
+  <div class="section">
 
-  <!-- todo: changing image, today shortcut button -->
-  <div class="section-darker flex-center flex-column">
+    <a class="back" href="{% url 'food_index' %}">< back</a>
+    <div class="center">
+      <div class="alt-label-text">add food</div>
+    </div>
+
+    <br>
     
-    <form class="no-margin no-padding" action="/food/add/" method="post">
+    <form class="center flex-column" action="/food/add/" method="post">
         {% csrf_token %}
         
          <div>
             <label for="label">label:</label>
-            <input  class="color" name="label" type="text" value="{{meal.label}}"> 
+            <input  name="label" type="text" value="{{meal.label}}"> 
          </div> 
-         <div class="flex-row flex-space width-100">
-            <div class="no-margin no-padding">
-              <div class="no-margin no-padding">
+
+         <br>
+
+         <div class="flex-row flex-around width-100">
+            <div >
+              <div >
                 <label class="no-padding" for="kcal">kcal:</label>
                 <input class="no-padding input-short" class="color" name="kcal" type="number" value="{{meal.kcal}}">
               </div>
-              <div class="no-margin no-padding">
+              <div >
                 <label class="no-padding" for="gprotein">g protein:</label>
                 <input class=" no-padding input-short" class="color" name="gprotein" type="number">
               </div>
-              <!--<input class=" no-padding input-medium" type="file" name="photo">--->
+
+              <br>
+
+              <div style="background-color: var(--darkest); height: 50%; border-radius: 10px;">
+                (photo filler)
+              </div>
             </div>
               <div class="flex-column no-margin no-padding">
-                <div class="no-margin no-padding">
-                  <label class="no-margin no-padding" for="protein">protein:</label>
-                  <input class="no-margin no-padding" class="" value="protein" type="checkbox" value="" name="checkboxes[]">
+                <div>
+                  <input  class="" value="protein" type="checkbox" value="" name="checkboxes[]">
+                  <label class="" for="protein">protein</label>
                 </div>
                 
-                <div class="no-margin no-padding">
-                <label class="no-margin no-padding" for="fruit">fruit:</label>
-                <input class="no-margin no-padding" class="" value="fruit" type="checkbox" value="" name="checkboxes[]">
+                <div>
+                  <input  class="" value="fruit" type="checkbox" value="" name="checkboxes[]">
+                  <label  for="fruit">fruit</label>
+                </div>
+                <div >
+                  <input  class="" value="veg" type="checkbox" value="" name="checkboxes[]">
+                  <label  for="veg">veg</label>
+                </div>
+                <div >
+                  <input  class="" value="grains" type="checkbox" value="" name="checkboxes[]">
+                  <label   for="grains">grains</label>
+                </div>
+                <div >
+                  <input  class="" value="dairy" type="checkbox" value="" name="checkboxes[]">
+                  <label  for="dairy">dairy</label>
+                </div>
+                  
+                <div >
+                  <input  class="" value="fats" type="checkbox" value="" name="checkboxes[]">
+                  <label  for="fats">fats</label>
+                </div>
               </div>
-              <div class="no-margin no-padding">
-                <label class="no-margin no-padding" for="veg">veg:</label>
-                <input class="no-margin no-padding" class="" value="veg" type="checkbox" value="" name="checkboxes[]">
-              </div>
-              <div class="no-margin no-padding">
-                <label  class="no-margin no-padding" for="grains">grains:</label>
-                <input class="no-margin no-padding" class="" value="grains" type="checkbox" value="" name="checkboxes[]">
-              </div>
-              <div class="no-margin no-padding">
-                <label class="no-margin no-padding" for="dairy">dairy:</label>
-                <input class="no-margin no-padding" class="" value="dairy" type="checkbox" value="" name="checkboxes[]">
-              </div>
-                
-              <div class="no-margin no-padding">
-                <label class="no-margin no-padding" for="fats">fats:</label>
-                <input class="no-margin no-padding" class="" value="fats" type="checkbox" value="" name="checkboxes[]">
-              </div>
-            </div>
-            <input hidden="true" id="currentdate" name="date" type="date">
-           
+            
+                <input hidden="true" id="currentdate" name="date" type="date">
          </div>
 
-         <div class="no-margin no-padding flex-center">
-          <div class="no-margin no-padding">
-            <label class="no-margin no-padding" for="lookup_save">save in lookup:</label>
-            <input class="no-margin no-padding" class="" value="lookup_save" type="checkbox" name="checkboxes[]">
+         <br>
+
+         <div class="center flex-around">
+          <input class="input-short" type="submit" value="log!">
+
+          <div >
+            <label  for="lookup_save">save in lookup:</label>
+            <input  class="" value="lookup_save" type="checkbox" name="checkboxes[]">
           </div>
-          <input type="submit" value="log!">
          </div>
         
     </form>
 
-    <div class="no-margin no-padding flex-center">
-      <form class="no-margin no-padding" onsubmit="return false">
+    <div class="center flex-column">
+      <form  onsubmit="return false">
         <label for="search">search</label>
         <input id="search" class="input-medium" name="search" type="text" >
         <i class="fa fa-search"></i>
       </form>
-      <div id="food-list" class="no-margin no-padding">
+      <div id="food-list" >
         <table id="food-data">
         </table>
       </div>
@@ -122,10 +137,5 @@
       update(input.value);
     })
   </script>
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
+
 {% endblock %}

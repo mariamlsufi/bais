@@ -1,26 +1,39 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 
-{% block title %}Log In{% endblock %}
+{% block title %}log in{% endblock %}
 
 {% block content %}
 
-<form method="post" class="section-darker flex-column">
-  {% csrf_token %}
-  <h3>log in</h3>
 
-  <div class="no-margin no=padding flex-center">
-      <label for="username">username</label>
-      <input class="input-long" name="username" type="username">
+<form class="center flex-column section" method="post">
+  <div class="center">
+    <div class="alt-label-text center flex-column" id="current-date" onclick="update(new Date())">login</div>
   </div>
 
-  <div class="no-margin no=padding flex-center">
-      <label for="password">password</label>
-      <input class="input-long" name="password" type="password">
+  <br>
+  
+  {% csrf_token %} 
+  
+  <div>
+    <label for="username">username:</label>
+    <input  class="input-medium" name="username" type="text" value="{{user.username}}">
   </div>
+  
+  <div>
+    <label for="password">password:</label>
+    <input  class="input-medium" name="password" type="password">  
+  </div>
+
+  <br>
 
   <input type="submit" value="log in">
-  <button><a href="{% url 'signup' %}">register &gt;</a></button>
-  <a href="{% url 'password_reset' %}">i forgot my password</a>
+
+  <br>
+
+  <div class="center flex-around">
+    <a href="{% url 'signup' %}">register &gt;</a>
+  <a href="{% url 'password_reset' %}">i forgot my password ></a>
+  </div>
 </form>
 
 {% endblock %}

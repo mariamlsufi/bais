@@ -8,7 +8,7 @@ from django.conf import settings
 
 class Workouts(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    label = models.CharField(max_length=50, unique=True)
+    label = models.CharField(max_length=50)
     svg = models.TextField()
     date_used = models.DateField(auto_now = True, null=False)
 
@@ -19,7 +19,7 @@ class WorkoutDates(models.Model):
     workout = models.ForeignKey(Workouts,  on_delete=models.CASCADE)
 
 class Exercises(models.Model):
-    label = models.CharField(max_length=20)
+    label = models.CharField(max_length=20, unique=True)
      
     UNITS = (
         ('lbs', 'lbs'),

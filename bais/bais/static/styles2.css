@@ -1,0 +1,382 @@
+:root {
+    --darkest: #313630;
+    --darker: #4E524D;
+    --lighter: #626661;
+    --lightest: #8C8C8C;
+}
+
+/* universal styles */
+
+html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    border: 0px;
+    text-transform: lowercase;
+    width: 100vw;
+    color: var(--lighter)
+}
+
+body {
+    background-color: var(--lighter);
+    font-family: 'Inter', sans-serif;
+    height: 95vh;
+    flex-direction: column;
+    min-height: 96vh;
+    max-width: 400px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+* {
+    border-radius: 2rem;
+    padding: .5rem;
+    margin: .5rem;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+/* headings and text style */
+
+p {
+    color: var(--lightest);
+    font-size: 13px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-overflow: wrap;
+}
+
+h1, .h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    color: var(--darkest);
+    font-weight: normal;
+    letter-spacing: -4px;
+}
+
+h2 {
+    font-size: 40px;
+    color: var(--darkest);
+    font-style: italic;
+    font-weight: bolder;
+}
+
+h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--lightest);
+    font-size: 32px;
+    font-weight: normal;
+    letter-spacing: -2px;
+}
+
+h4 {
+    font-style: italic;
+    color: var(--darkest);
+    font-weight: bold;
+}
+
+h5 {
+    color: var(--darkest);
+    font-weight: bold;
+}
+
+h6 {
+    color: var(--lightest);
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* sectioning and flex */
+
+.section-darker{
+    display: flex;
+    background-color: var(--darker);
+    justify-content: space-around;
+    align-items: center;
+    max-width: 400px;
+}
+
+.section-darkest{
+    display: flex;
+    background-color: var(--darkest);
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-space {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+.width-100 {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.no-padding, li, span {
+    padding: 0px;
+}
+
+.no-margin, svg, li, span {
+    margin: 0px;
+}
+
+.no-borders, svg {
+    border-radius: 0px;
+    border: none;
+}
+
+/* nav links */
+a, .link-light {
+    color: var(--lightest);
+    text-decoration: none;
+}
+
+.link-dark {
+    color: var(--darkest);
+    font-style: italic;
+}
+
+/* input/forms */
+
+input, select { 
+    border: none;
+    background-color: var(--lightest);
+    color: var(--darkest);
+    height: 25px;
+    font-size: 16px;
+}
+
+select {
+    padding: 0px;
+}
+
+.input:active {
+    border: none;
+    outline: none;
+}
+
+.input-short {
+    width: 50px;
+    padding-left: 5px;
+    text-align: center;
+}
+
+.input-shortest {
+    width: 40px;
+    padding-left: 5px;
+    text-align: center;
+}
+
+.input-medium {
+    width: 90px;
+}
+
+.input-long {
+    width: 150px;
+    max-width: 100%;
+}
+
+.alt-input-text {
+    background-color: none;
+}
+
+input[type='checkbox']:checked {
+    background-color: var(--lightest);
+}
+
+input[type='checkbox']:checked:after {
+    content: '\2713';
+    font-weight: bolder;
+    color:var(--darker);
+}
+
+input[type='checkbox']{
+    text-align: center;
+    vertical-align: middle;
+    width: 20px !important;
+    height: 20px !important;
+    appearance:none;
+    border-radius:50%;
+    border: var(--darkest);
+    background-color: var(--lighter);
+    box-shadow: none;
+    font-size: 1em;
+    content: '\1F784';
+    padding: 0px;
+    margin: 0px;
+}
+
+label {
+    color: var(--darkest);
+    font-style: italic;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.input-text-2-dark, .input-text-2-light {
+    background-color: var(--darker);
+    border-bottom: solid 2px var(--lightest);
+    border-radius: 0px;
+    color: var(--lightest)
+}
+
+.input-text-2-dark {
+    border-bottom: solid 2px var(--darkest);
+    color: var(--darkest);
+    font-style: italic;
+    font-weight: bold;
+}
+
+::placeholder {
+    color: var(--darkest)
+}
+
+/* buttons */
+input[type="submit"], button {
+    background-color: var(--darkest);
+    color: var(--lightest);
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-style: italic;
+    border: none;
+    height: 25px;
+    font-size: 16px;
+}
+
+button, .light-button{
+    background-color: var(--lighter);
+}
+
+.dark-button {
+    background-color: var(--darkest);
+}
+
+.add-button, .add-button-long
+{
+    font-style: normal;
+    font-weight: bold;
+    color: var(--darker);
+    font-size: 30px;
+    height: 35px;
+}
+
+.add-button-long {
+    height: 30px;
+    width: 80%;
+}
+
+/* header and footer */
+
+footer{
+    position: sticky;
+    left: 0;
+    bottom: 0;
+    background-color: var(--lighter);
+    border-radius: 0px;
+    height: 5vh;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--lighter);
+    border-radius: 0px;
+}
+
+.content {
+    padding: 0px;
+    margin: 0px;
+    flex-grow: 1;
+}
+
+.selected {
+    background-color: var(--darker);
+    border-radius: 2rem;
+}
+
+/* customizing form */
+ul, span {
+    display: none;
+}
+
+.colors {
+    border-radius: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* tables */
+table {
+    width: 100%;
+    text-align: center;
+}
+
+tr {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* images */
+.meal-img {
+    max-width: 30%;
+}
+
+/* checkboxes */
+
+input[type='checkbox']:checked {
+    background-color: var(--lightest);
+}
+
+input[type='checkbox']:checked:after {
+    content: '\2713';
+    font-weight: bolder;
+    color:var(--darker);
+}
+
+input[type='checkbox']{
+    text-align: center;
+    vertical-align: middle;
+    width: 20px !important;
+    height: 20px !important;
+    appearance:none;
+    border-radius:50%;
+    border: var(--darkest);
+    background-color: var(--lighter);
+    box-shadow: none;
+    font-size: 1em;
+    content: '\1F784';
+    padding: 0px;
+    margin: 0px;
+}
+

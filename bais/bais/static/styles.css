@@ -5,205 +5,246 @@
     --lightest: #8C8C8C;
 }
 
-/* universal styles */
+/* base styling */ 
+
+* {
+    text-transform: lowercase;
+}
 
 html {
+    background-color: var(--lighter);
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 0px;
-    border: 0px;
-    text-transform: lowercase;
-    width: 100vw;
-    color: var(--lighter)
 }
 
 body {
-    background-color: var(--lighter);
-    font-family: 'Inter', sans-serif;
-    height: 95vh;
+    margin: 0px;
+    width: 350px;
+    display: flex;
     flex-direction: column;
-    min-height: 96vh;
-    max-width: 400px;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--darkest);
+}
+
+main {
+    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 65px;
+    padding-bottom: 90px;
+
+    overflow-y: scroll;
 }
 
-* {
-    border-radius: 2rem;
-    padding: .5rem;
-    margin: .5rem;
-    max-width: 100%;
-    flex-wrap: wrap;
-}
-
-/* headings and text style */
-
-p {
-    color: var(--lightest);
-    font-size: 13px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    text-overflow: wrap;
-}
-
-h1, .h1 {
-    font-family: 'DM Serif Display', serif;
+header {
+    color: var(--darkest);
     font-size: 48px;
-    color: var(--darkest);
-    font-weight: normal;
-    letter-spacing: -4px;
-}
-
-h2 {
-    font-size: 40px;
-    color: var(--darkest);
-    font-style: italic;
-    font-weight: bolder;
-}
-
-h3 {
     font-family: 'DM Serif Display', serif;
-    color: var(--lightest);
-    font-size: 32px;
-    font-weight: normal;
-    letter-spacing: -2px;
+    letter-spacing: -4px;
+
+    position: fixed;
+    top: 0;
+    background-color: var(--lighter);
+    width: 100%;
+    text-align: center;
 }
 
-h4 {
-    font-style: italic;
-    color: var(--darkest);
-    font-weight: bold;
-}
-
-h5 {
-    color: var(--darkest);
-    font-weight: bold;
-}
-
-h6 {
-    color: var(--lightest);
-    font-size: 16px;
-    font-weight: normal;
-}
-
-/* sectioning and flex */
-
-.section-darker{
+footer {
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 15px;
+    background-color: var(--lighter);
+    width: 350px;
     display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    margin: 10px;
+
+    border-top: 5px solid var(--darker)
+}
+
+.selected {
     background-color: var(--darker);
-    justify-content: space-around;
-    align-items: center;
-    max-width: 400px;
 }
 
-.section-darkest{
+.nav-icon {
+    padding: 8px;
+    border-radius: 50%;
+}
+
+a {
+    color: var(--darkest);
+    text-decoration: none;
+    font-style: italic;
+    font-size: 15px;
+}
+
+
+
+.section {
+    background-color: var(--darker);
+    border-radius: 20px;
+    padding: 15px;
     display: flex;
-    background-color: var(--darkest);
-    justify-content: space-around;
-    align-items: center;
-    flex-grow: 1;
+    flex-direction: column;
+    width: 85%;
+    margin-top: 15px;
 }
 
-.flex-center{
+.center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.flex-column{
-    display: flex;
-    flex-direction: column;
+/* headings */
+
+.light-stylized, .dark-stylized {
+    color: var(--lightest);
+    font-family: 'DM Serif Display', serif; 
+    letter-spacing: -0.5px;
+    font-weight: normal;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.dark-stylized {
+    color: var(--darkest);
+}
+
+.label-text {
+    color: var(--lighter);
+    font-size: 15px;
+}
+
+.alt-label-text {
+    color: var(--darkest);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* icons */
+.workout-icon{
+    background-color: var(--darkest);
+    padding: 10px;
+    border-radius: 15px;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    color: var(--lightest)
+}
+
+.icon {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+/* flex */
+
+select {
+    margin: 5px;
+    width: 115px;
+    border-radius: 10px;
+    color: var(--darkest);
+    background-color: var(--lightest);
+    border: none;
+    padding: 1px;
+
 }
 
 .flex-row {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
-.flex-space {
+.flex-column {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 .flex-between {
     display: flex;
     justify-content: space-between;
 }
+
+.flex-around{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.back {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 .width-100 {
     width: 100%;
-    padding: 0px;
-    margin: 0px;
 }
 
-.no-padding, li, span {
-    padding: 0px;
+.margin {
+    margin: 10px;
 }
 
-.no-margin, svg, li, span {
-    margin: 0px;
-}
-
-.no-borders, svg {
-    border-radius: 0px;
-    border: none;
-}
-
-/* nav links */
-a, .link-light {
-    color: var(--lightest);
-    text-decoration: none;
-}
-
-.link-dark {
-    color: var(--darkest);
-    font-style: italic;
-}
-
-/* input/forms */
-
-input, select { 
-    border: none;
-    background-color: var(--lightest);
-    color: var(--darkest);
-    height: 25px;
-    font-size: 16px;
-}
-
-select {
-    padding: 0px;
-}
-
-.input:active {
+.color{
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
     border: none;
     outline: none;
+    -webkit-appearance: none;
+    margin: 5px;
+}
+
+.color::-webkit-color-swatch-wrapper {
+    padding: 0; 
+}
+.color::-webkit-color-swatch {
+    border: 0px;
+    border-radius: 50%;
+}
+
+/* forms */
+
+input[type="submit"], button {
+    background-color: var(--darkest);
+    color: var(--lightest);
+    font-style: italic;
+    border: none;
+    height: 25px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+input {
+    background-color: var(--lightest);
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    color: var(--darker);
 }
 
 .input-short {
     width: 50px;
-    padding-left: 5px;
-    text-align: center;
-}
-
-.input-shortest {
-    width: 40px;
-    padding-left: 5px;
-    text-align: center;
+    margin: 5px;
 }
 
 .input-medium {
-    width: 90px;
+    width: 175px;
+    margin: 5px;
 }
 
-.input-long {
-    width: 150px;
-    max-width: 100%;
+label {
+    font-style: italic;
+    color: var(--lightest);
 }
 
-.alt-input-text {
-    background-color: none;
-}
 
 input[type='checkbox']:checked {
     background-color: var(--lightest);
@@ -228,14 +269,7 @@ input[type='checkbox']{
     font-size: 1em;
     content: '\1F784';
     padding: 0px;
-    margin: 0px;
-}
-
-label {
-    color: var(--darkest);
-    font-style: italic;
-    font-weight: bold;
-    font-size: 16px;
+    margin: 5px;
 }
 
 .input-text-2-dark, .input-text-2-light {
@@ -256,8 +290,17 @@ label {
     color: var(--darkest)
 }
 
-/* buttons */
-input[type="submit"], button {
+.no-margin {
+    margin: 0px;
+}
+
+.margin {
+    margin-left:5;
+    margin-right: 5px;
+}
+
+
+input[type="submit"], button, .light-button, .dark-button {
     background-color: var(--darkest);
     color: var(--lightest);
     padding-top: 0px;
@@ -266,129 +309,44 @@ input[type="submit"], button {
     border: none;
     height: 25px;
     font-size: 16px;
+    border-radius: 10px;
 }
 
-button, .light-button{
-    background-color: var(--lighter);
-}
-
-.dark-button {
+button, .dark-button {
     background-color: var(--darkest);
 }
 
-.add-button, .add-button-long
-{
-    font-style: normal;
-    font-weight: bold;
-    color: var(--darker);
-    font-size: 30px;
-    height: 35px;
+
+.light-button{
+    background-color: var(--lighter);
 }
 
-.add-button-long {
-    height: 30px;
+.bold {
+    font-weight: bolder;
+}
+
+.width-80 {
     width: 80%;
 }
 
-/* header and footer */
-
-footer{
-    position: sticky;
-    left: 0;
-    bottom: 0;
-    background-color: var(--lighter);
-    border-radius: 0px;
-    height: 5vh;
+.big-text {
+    font-size: 25px;
 }
-
-header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0px;
-    padding: 0px;
-    background-color: var(--lighter);
-    border-radius: 0px;
-}
-
-.content {
-    padding: 0px;
-    margin: 0px;
-    flex-grow: 1;
-}
-
-.selected {
-    background-color: var(--darker);
-    border-radius: 2rem;
-}
-
-/* customizing form */
-ul, span {
-    display: none;
-}
-
-.colors {
-    border-radius: 0px;
-    margin: 0px;
-    padding: 0px;
-}
-
-/* tables */
-table {
-    width: 100%;
-    text-align: center;
-}
-
-tr {
-    margin: 0px;
-    padding: 0px;
-}
-
-/* images */
-.meal-img {
-    max-width: 30%;
-}
-
-/* checkboxes */
-
-input[type='checkbox']:checked {
-    background-color: var(--lightest);
-}
-
-input[type='checkbox']:checked:after {
-    content: '\2713';
-    font-weight: bolder;
-    color:var(--darker);
-}
-
-input[type='checkbox']{
-    text-align: center;
-    vertical-align: middle;
-    width: 20px !important;
-    height: 20px !important;
-    appearance:none;
-    border-radius:50%;
-    border: var(--darkest);
-    background-color: var(--lighter);
-    box-shadow: none;
-    font-size: 1em;
-    content: '\1F784';
-    padding: 0px;
-    margin: 0px;
+.bigger-text {
+    font-size: 40px;
 }
 
 /* misc */
 #food-list{
-    height: 33vh;
+    max-height: 22vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 #food-data-2{
-    height: 15vh;
+    max-height: 15vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+

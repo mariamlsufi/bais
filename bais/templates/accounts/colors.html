@@ -1,28 +1,46 @@
-
 {% extends "base.html" %}
 
 {% block title %}account info{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
- <!--- if last used in the middle of a workout-->
-  <div class="section-darker">
-    <form action="/accounts/colors/" method="post">
+  <div class="section center">
+    <a class="back" href="{% url 'accounts_index' %}">< back</a>
+    <div class="center">
+      <div class="alt-label-text">colors</div>
+    </div>
+
+    <br>
+
+    <form class="flex-column width-100" action="/accounts/colors/" method="post">
         {% csrf_token %} 
 
-        <input  class="color" name="lightest" type="color" value="{{user.lightest}}">
-        <input class="color" name="lighter" type="color" value="{{user.lighter}}">
-        <input class="color"  name="darker" type="color" value="{{user.darker}}">
-        <input  class="color" name="darkest" type="color" value="{{user.darkest}}">
+        <div class="flex-row center">
+          <div>
+            <div class="margin center">
+              <input  class="color" name="lightest" type="color" value="{{user.lightest}}">
+              <label for="lightest">  lightest</label>
+            </div>
+            <div class="margin center">
+              <input  class="color" name="lighter" type="color" value="{{user.lighter}}">
+              <label for="lighter">lighter</label>
+            </div>
+          </div>
+          <div>
+            <div class="margin center">
+              <input  class="color" name="darker" type="color" value="{{user.darker}}">
+              <label for="darker">darker</label>
+            </div>
+            <div class="margin center">
+              <input  class="color" name="darkest" type="color" value="{{user.darkest}}">
+              <label for="darkest">darkest</label>
+            </div>
+          </div>
+        </div>
 
-        <input type="submit" value="submit">
+        <br>
+
+        <button type="submit" value="submit">submit</button>
     </form>
   </div>
 
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
 {% endblock %}

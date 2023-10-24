@@ -5,35 +5,47 @@
 {% block content %}
 {% if user.is_authenticated %}  
 
-  <!-- todo: changing image, today shortcut button -->
-  <form class="section-darker flex-center flex-column" action="" method="post">
-    
+  <form class="section" action="" method="post">
+    <a class="back" href="{% url 'workouts_index' %}">< back</a>
+    <br>
+    <div class="center flex-between">
+      <div class="alt-label-text">{{workout.label}}</div>
+      <div class="label-text">today's bests</div>
+    </div>
+
+    <br>
+
     {% csrf_token %} 
 
-    <h4>{{workout.label}}</h4>
-
     {% for exercise in exercises %}
-        <div class="flex-column" style="width: 90%">
-           <div class="no-margin no-padding">
-            <input type="checkbox"> {{exercise.label}}
-            <input type="number" name="{{exercise.label}}_reps" class="input-shortest"> x <input type="number" name="{{exercise.label}}_intensity" class="input-shortest"> ({{exercise.units}})
+        <div class="flex-column width-100" >
+           <div class="width-100 flex-row flex-between">
+              <div>
+                <input type="checkbox"> {{exercise.label}}
+              </div>
+              <div>
+                <input type="number" name="{{exercise.label}}_reps" class="input-short">x<input type="number" name="{{exercise.label}}_intensity" class="input-short">
+              </div>
            </div>
     
             {% for set in exercise.sets %}
-            <div class="flex-column no-margin no-padding">
-                <div class="no-margin no-padding">
+            <div class="flex-column">
+                <div >
                     &emsp; <input type="checkbox"> {{set.reps}} x {{set.intensity}} {{exercise.units}}
                    </div>
                 
             </div>
             {% endfor %}
+            <br>
         </div>
     {% endfor %}
 
-    <div class="flex-row">
-        <button><a href="edit/">full edit</a></button>
+    <br>
+
+    <div class="flex-row width-100 flex-around">
+      <a href="edit/"><button class="light-button" type="button">full edit</button></a>
         <input type="submit" class="dark-button" value="finished!">
-        <!--<button>quick edit</button>-->
+        <button type="button" class="light-button">quick edit</button>
     </div>
       
     </div>

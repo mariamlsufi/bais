@@ -3,36 +3,42 @@
 {% block title %}food{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}  
-
-  <div class="section-darker flex-center flex-column">
+  <div class="section center flex-column">
     
-    <h6>your progress</h6>
-    <h3 class="no-margin no-padding" id="graph-label">cals in</h3>
-
-    <div class="no-margin no-padding" id="chart">
+    <a class="back" href="{% url 'food_index' %}">< back</a>
+    <div class="center">
+      <div class="alt-label-text">your progress</div>
     </div>
 
-    <select onchange="change()" id="daySelect">
+    <div class="light-stylized big-text no-margin" id="graph-label"></div>
+
+    <div class="width-100" id="chart"></div>
+
+    <div class="flex-row">
+
+      <select onchange="change()" id="daySelect">
         <option value="7">last week</option>
         <option value="14">last two weeks</option>
         <option value="30">last month</option>
         <option value="180">last six months</option>
         <option value="365">last year</option>
-    </select>
+      </select>
 
-    <select onchange="change()" id="typeSelect">
-        <option value="kcal">cals in</option>
-        <option value="g_protein">g protein</option>
-        <option value="protein">protein servings</option>
-        <option value="fruit">fruit servings</option>
-        <option value="veg">veg servings</option>
-        <option value="grains">grains servings</option>
-        <option value="fats">fats servings</option>
-        <option value="dairy">dairy servings</option>
-    </select>
+      <select onchange="change()" id="typeSelect">
+          <option value="kcal">cals in</option>
+          <option value="g_protein">g protein</option>
+          <option value="protein">protein servings</option>
+          <option value="fruit">fruit servings</option>
+          <option value="veg">veg servings</option>
+          <option value="grains">grains servings</option>
+          <option value="fats">fats servings</option>
+          <option value="dairy">dairy servings</option>
+      </select>
+    
+    </div>
 
-    <h4 id="summary"></h4>
+
+    <div class="dark-stylized big-text" id="summary"></div>
 
   </div>
   
@@ -56,7 +62,7 @@
         }],
           chart: {
           type: 'bar',
-          height: 200,
+          height: 100,
           toolbar: {
             show: false,
           }
@@ -87,6 +93,9 @@
         yaxis: {
           style: {
             colors: ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+          },
+          labels: {
+            show: false,
           }
         },
         fill: {
@@ -113,9 +122,13 @@
 
       chart_data = [];
       var sum = 0;
+      var num_days = 0;
       for (var i = json["data"].length - 1; i >= 0; i--){
         chart_data.push(json["data"][i][type]);
-        sum +=  json["data"][i][type];
+        if (json["data"][i][type]){
+          sum +=  json["data"][i][type];
+          num_days++;
+        }
       }
 
       chart.updateSeries([{
@@ -125,7 +138,7 @@
       console.log(goals);
       console.log(type);
 
-      document.getElementById("summary").innerHTML = "average: " + Math.round(sum/days) + "/" + goals[type];
+      document.getElementById("summary").innerHTML = "average: " + Math.round(sum/num_days) + "/" + goals[type];
       document.getElementById("graph-label").innerHTML = type;
     }
 
@@ -133,10 +146,4 @@
 
   </script>
 
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
 {% endblock %}

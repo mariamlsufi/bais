@@ -3,39 +3,27 @@
 {% block title %}account info{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
- <!--- if last used in the middle of a workout-->
-  <div class="section-darker">
-    <a class="flex-between flex-center width-100 flex-space no-margin no-padding" href="/accounts/greeting">
-        <h5 class="no-margin"> app greeting</h5> <p>{{ user.app_greeting }} ></p>
-    </a>
-  </div>
-  <div class="section-darker">
-    <a class="flex-between flex-center width-100 flex-space no-margin no-padding" href="/accounts/colors">
-        <h5 class="no-margin"> color scheme</h5> 
-        <p style="letter-spacing: -4px">
-            <div class="no-margin no-padding" style="color: {{ user.darkest}}">&#9711; </div> 
-            <div class="no-margin no-padding" style="color: {{ user.lighter}}">&#9711; </div> 
-            <div class="no-margin no-padding" style="color: {{ user.lightest}}">&#9711; </div> 
-        >
-    </p>
-    </a>
-  </div>
-  <div class="section-darker">
-    <a class="flex-between flex-center width-100 flex-space no-margin no-padding" href="/accounts/details">
-        <h5 class="no-margin"> login details</h5> <p> ></p>
-    </a>
-  </div>
-  <div class="section-darker">
-    <a class="flex-between flex-center width-100 flex-space no-margin no-padding" href="/accounts/goals">
-        <h5 class="no-margin"> goals</h5> <p>></p>
-    </a>
+  <div class="flex-row flex-between section">
+    <p>{{user.app_greeting}}</p>
+    <h5><a href="{% url 'greeting' %}">app greeting ></a></h5>
   </div>
 
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
+  <div class="flex-row flex-between section">
+    <div class="flex-row" style="letter-spacing: -4px; font-weight: bold;">
+      <div style="color: {{ user.darkest}}">&#9711; </div> 
+      <div style="color: {{ user.lighter}}">&#9711; </div> 
+      <div style="color: {{ user.lightest}}">&#9711; </div> 
+    </div>
+    <h5><a href="{% url 'colors' %}">color scheme ></a></h5>
   </div>
-{% endif %}
+
+  <div class="flex-row flex-between section">
+    <p>{{user.protein_goal_g}}g protein, {{user.cal_goal}}kcal, etc</p>
+    <h5><a href="{% url 'goals' %}">goals ></a></h5>
+  </div>
+
+  <div class="flex-row flex-between section">
+    <p>{{user.email}}, {{user.username}}</p>
+    <h5><a href="{% url 'details' %}">login details ></a></h5>
+  </div>
 {% endblock %}
