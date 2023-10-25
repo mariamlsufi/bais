@@ -39,7 +39,7 @@ main {
     overflow-y: scroll;
 }
 
-header {
+header, .header {
     color: var(--darkest);
     font-size: 48px;
     font-family: 'DM Serif Display', serif;
@@ -338,7 +338,7 @@ button, .dark-button {
 
 /* misc */
 #food-list{
-    max-height: 22vh;
+    max-height: 15vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -348,5 +348,4 @@ button, .dark-button {
     overflow-y: scroll;
     overflow-x: hidden;
 }
-
 

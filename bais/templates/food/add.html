@@ -12,7 +12,7 @@
 
     <br>
     
-    <form class="center flex-column" action="/food/add/" method="post">
+    <form class="center flex-column" action="/food/add/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
          <div>
@@ -35,8 +35,8 @@
 
               <br>
 
-              <div style="background-color: var(--darkest); height: 50%; border-radius: 10px;">
-                (photo filler)
+              <div>
+                <input type="file" class="input-medium" name="file">
               </div>
             </div>
               <div class="flex-column no-margin no-padding">
@@ -81,6 +81,8 @@
             <input  class="" value="lookup_save" type="checkbox" name="checkboxes[]">
           </div>
          </div>
+
+        <div>{{error}}</div>
         
     </form>
 
@@ -136,6 +138,7 @@
     input.addEventListener('input', async function() {
       update(input.value);
     })
+
   </script>
 
 {% endblock %}

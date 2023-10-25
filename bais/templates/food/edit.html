@@ -7,7 +7,7 @@
 
     <a class="back" href="{% url 'food_index' %}">< back</a>
     <div class="center">
-      <div class="alt-label-text">add food</div>
+      <div class="alt-label-text">edit food</div>
     </div>
 
     <br>
@@ -35,35 +35,35 @@
 
               <br>
 
-              <div style="background-color: var(--darkest); height: 50%; border-radius: 10px;">
-                (photo filler)
+              <div style="background-color: var(--darkest); width:  150px; height: 50%; border-radius: 10px" class="center">
+                <img src="/{{meal.photo}}" style="max-height: 90%; max-width: 70%; border-radius: 10px">
               </div>
             </div>
               <div class="flex-column no-margin no-padding">
                 <div>
-                  <input  class="" value="protein" type="checkbox" value="" name="checkboxes[]">
+                  <input id="protein" class="" value="protein" type="checkbox" value="" name="checkboxes[]">
                   <label class="" for="protein">protein</label>
                 </div>
                 
                 <div>
-                  <input  class="" value="fruit" type="checkbox" value="" name="checkboxes[]">
+                  <input id="fruit" class="" value="fruit" type="checkbox" value="" name="checkboxes[]">
                   <label  for="fruit">fruit</label>
                 </div>
                 <div >
-                  <input  class="" value="veg" type="checkbox" value="" name="checkboxes[]">
+                  <input id="veg" class="" value="veg" type="checkbox" value="" name="checkboxes[]">
                   <label  for="veg">veg</label>
                 </div>
                 <div >
-                  <input  class="" value="grains" type="checkbox" value="" name="checkboxes[]">
+                  <input id="grains" class="" value="grains" type="checkbox" value="" name="checkboxes[]">
                   <label   for="grains">grains</label>
                 </div>
                 <div >
-                  <input  class="" value="dairy" type="checkbox" value="" name="checkboxes[]">
+                  <input id="dairy" class="" value="dairy" type="checkbox" value="" name="checkboxes[]">
                   <label  for="dairy">dairy</label>
                 </div>
                   
                 <div >
-                  <input  class="" value="fats" type="checkbox" value="" name="checkboxes[]">
+                  <input id="fats" class="" value="fats" type="checkbox" value="" name="checkboxes[]">
                   <label  for="fats">fats</label>
                 </div>
               </div>
@@ -80,6 +80,8 @@
             <label  for="lookup_save">save in lookup:</label>
             <input  class="" value="lookup_save" type="checkbox" name="checkboxes[]">
           </div>
+
+          <div>{{error}}</div>
          </div>
         
     </form>
@@ -100,6 +102,13 @@
   </div>
 
   <script>
+
+  document.querySelector('#fruit').checked = '{{meal.fruit}}' == 'True';
+  document.querySelector('#protein').checked = '{{meal.protein}}' == 'True';
+  document.querySelector('#fats').checked = '{{meal.fats}}' == 'True';
+  document.querySelector('#veg').checked = '{{meal.veg}}' == 'True';
+  document.querySelector('#grains').checked = '{{meal.grains}}' == 'True';
+  document.querySelector('#dairy').checked = '{{meal.dairy}}' == 'True';
 
     var date = new Date();
 

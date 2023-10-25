@@ -3,13 +3,12 @@
 {% block title %}workout{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}  
 
 <form class="section center flex-column" onsubmit="" method="post">
     {% csrf_token %}
     
-    <input type="text" class="input-text-2-dark input-medium" name="workout_label" placeholder="name">
-    <select name="icon">
+    <input type="text" class="input-text-2-dark input-medium" name="workout_label" placeholder="name" value="{{workout.label}}">
+    <select id="icon-select" name="icon">
         <option value="0">push icon</option>
         <option value="1">pull icon </option>
         <option value="2">legs icon</option>
@@ -21,7 +20,7 @@
     <div class="exercise-set" style="display: none;">
         <div class="exercise no-margin no-padding">
             <input type="checkbox">
-        <input type="text" name="exercise_name" class="input-text-2-light input-medium" placeholder="name">
+        <input type="text" name="exercise_name" class="input-text-2-light input-medium" value="name">
         <select name="num_sets" onchange="javascript:changeSets(this)" class="input-short sets">
             <option value="1">1 set</option>
             <option value="2">2 set</option>
@@ -65,7 +64,7 @@
     <div class="exercise-set">
         <div class="exercise no-margin no-padding">
             <input type="checkbox">
-        <input name="exercise_name" type="text" class="input-text-2-light input-short" placeholder="name"">
+        <input name="exercise_name" type="text" class="input-text-2-light input-short" placeholder="name" value="{{exercise.label}}">
         <select value="{{exercise.num_sets}}" name="num_sets" onchange="javascript:changeSets(this)" class="input-short sets">
             <option value="1">1 set</option>
             <option value="2">2 set</option>
@@ -123,6 +122,7 @@
 </form>
 
 <script>
+
     function addExercise(){
         console.log("running")
         exerciseDiv = document.querySelector(".exercise-set")
@@ -148,11 +148,4 @@
     }
 
 </script>
-
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
 {% endblock %}

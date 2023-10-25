@@ -138,7 +138,10 @@
       console.log(goals);
       console.log(type);
 
-      document.getElementById("summary").innerHTML = "average: " + Math.round(sum/num_days) + "/" + goals[type];
+      var average = Math.round(sum/num_days);
+      if (isNaN(average))
+        average = '~'
+      document.getElementById("summary").innerHTML = "average: " + average + "/" + goals[type];
       document.getElementById("graph-label").innerHTML = type;
     }
 

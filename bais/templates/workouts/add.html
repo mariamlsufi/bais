@@ -7,7 +7,7 @@
 <form class="section center flex-column" onsubmit="" method="post">
     {% csrf_token %}
 
-    
+ 
     
     <input type="text" class="input-text-2-dark input-medium" placeholder="title" name="workout_label" value="">
     <select name="icon">
@@ -43,9 +43,9 @@
         </select>
         x
         <select name="units" class="input-short">
+            <option value="lbs">lbs</option>
             <option value="bw+">bw+</option>
             <option value="bw">bw</option>
-            <option value="lbs">lbs</option>
             <option value="kg">kg</option>
         </select>
         <button type="button" class="fa fa-trash" onclick="javascript:deleteExercise(this)"></button>
@@ -56,9 +56,9 @@
             &emsp; 
             <input type="checkbox">
             <input name="set_reps" class="input-short input-text-2-light" value="0" type="number">
-            reps x  
+             x  
             <input name="set_intensity" class="input-short input-text-2-light" value="0" type="number">
-            intensity
+        
         </div>
 
 
@@ -87,9 +87,9 @@
         </select>
         x
         <select name="units" class="input-short">
+            <option value="lbs">lbs</option>
             <option value="bw+">bw+</option>
             <option value="bw">bw</option>
-            <option value="lbs">lbs</option>
             <option value="kg">kg</option>
         </select>
         <button type="button" class="fa fa-trash" onclick="javascript:deleteExercise(this)"></button>
@@ -99,9 +99,9 @@
             &emsp; 
             <input type="checkbox">
             <input name="set_reps" class="input-short input-text-2-light" value="0" type="number">
-            reps x  
+             x  
             <input name="set_intensity" class="input-short input-text-2-light" value="0" type="number">
-            intensity
+            
         </div>
 
 
@@ -110,7 +110,7 @@
 
    <br>
 
-    <button type="button" class="add_exercise" class="button-light" onclick="addExercise()">
+    <button type="button" class="add_exercise light-button" onclick="addExercise()">
         add exercise +
     </button>
 
@@ -136,12 +136,13 @@
     function changeSets(e) {
         var node = e.parentNode.parentNode
         var sets = node.querySelectorAll(".set");
-        console.log("values", sets.length, e.value)
-        for (var i = 0; i < sets.length; i++){
-            sets[i].remove()
-        }
+        var length = sets.length;
+        console.log("values", length, e.value)
         for (var i = 0; i < e.value; i++){
-            node.append(document.querySelector(".set").cloneNode(true))
+            node.append(sets[0].cloneNode(true))
+        }
+        for (var i = 0; i < length; i++){
+            sets[i].remove()
         }
     }
 

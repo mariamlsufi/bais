@@ -1,14 +1,43 @@
-{% extends "base2.html" %}
+{% extends "base.html" %}
 
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="section-darker flex-column">
-  <h3>sign up</h3>
-  <form method="post" class="flex-center">
+<div class="section flex-column center">
+  <div class="dark-stylized big-text">sign up</div>
+  <form method="post" class="flex-column">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">submit</button>
+
+    <div>
+      <label for="id_username">Username:</label>
+      <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username" fdprocessedid="xt3v9">
+    </div>
+  
+    <br>
+
+    <div>
+      <label for="id_email">Email:</label>
+      <input type="email" name="email" maxlength="254" id="id_email" fdprocessedid="hwifyh">     
+    </div>
+  
+    <br>
+
+    <div>
+      <label for="id_password1">Password:</label>
+      <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" fdprocessedid="0ta75g">
+    </div>
+        
+    <br>
+  
+    <div>
+      <label for="id_password2"> confirm:</label>
+      <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" fdprocessedid="ryuj7m" >
+        
+    </div>
+    
+    <br>
+  
+    <button type="submit" fdprocessedid="kz6xa3">submit</button>
   </form>
 </div>
 {% endblock %}

@@ -62,34 +62,37 @@ def AddFood(request):
         # create a form instance and populate it with data from the request:
         user = get_object_or_404(CustomUser, id=request.user.id)
 
-        meal = Meals()
-        meal.user = user
-        meal.kcal = request.POST.get("kcal", 0)
-        meal.g_protein = request.POST.get("gprotein", 0)
-        meal.label = request.POST.get("label", "")
+        try: 
+            meal = Meals(photo = request.FILES['file'])
+            meal.user = user
+            meal.kcal = request.POST.get("kcal", 0)
+            meal.g_protein = request.POST.get("gprotein", 0)
+            meal.label = request.POST.get("label", "")
 
-        checkboxes = request.POST.getlist("checkboxes[]", {})
-        meal.protein = "protein" in checkboxes
-        meal.fruit = "fruit" in checkboxes
-        meal.veg = "veg" in checkboxes
-        meal.grains = "grains" in checkboxes
-        meal.dairy = "dairy" in checkboxes
-        meal.fats = "fats" in checkboxes
+            checkboxes = request.POST.getlist("checkboxes[]", {})
+            meal.protein = "protein" in checkboxes
+            meal.fruit = "fruit" in checkboxes
+            meal.veg = "veg" in checkboxes
+            meal.grains = "grains" in checkboxes
+            meal.dairy = "dairy" in checkboxes
+            meal.fats = "fats" in checkboxes
 
-        if ("lookup_save" in checkboxes):
-            food = CustomFood()
-            food.user = user
-            food.kcal = meal.kcal
-            food.g_protein = meal.g_protein
-            food.label = meal.label
+            if ("lookup_save" in checkboxes):
+                food = CustomFood()
+                food.user = user
+                food.kcal = meal.kcal
+                food.g_protein = meal.g_protein
+                food.label = meal.label
 
-            food.save()
+                food.save()
 
-        meal.date_added = request.POST.get("date")
+            meal.date_added = request.POST.get("date")
 
-        meal.save()
-            
-        return HttpResponseRedirect("/food/")
+            meal.save()
+                
+            return HttpResponseRedirect("/food/")
+        except: 
+            return render(request, "food/add.html", {"error": "please enter valid values in all fields"})
         
     return render(request, "food/add.html")
 
@@ -122,20 +125,24 @@ def EditMeal(request, id):
     meal = get_object_or_404(Meals, id=id, user=request.user.id)
     
     if request.method == "POST":
-        meal.kcal = request.POST.get("kcal", 0)
-        meal.g_protein = request.POST.get("gprotein", 0)
-        meal.label = request.POST.get("label", "")
+        try: 
+            meal.kcal = request.POST.get("kcal", 0)
+            meal.g_protein = request.POST.get("gprotein", 0)
+            meal.label = request.POST.get("label", "")
 
 
-        #checkboxes = request.POST.getlist("checkboxes[]", {})
-        #meal.protein = "protein" in checkboxes
-        #meal.fruit = "fruit" in checkboxes
-        #meal.veg = "veg" in checkboxes
-        #meal.grains = "grains" in checkboxes
-        #meal.dairy = "dairy" in checkboxes
-        #meal.fats = "fats" in checkboxes
+            checkboxes = request.POST.getlist("checkboxes[]", {})
+            print( checkboxes)
+            meal.protein = "protein" in checkboxes
+            meal.fruit = "fruit" in checkboxes
+            meal.veg = "veg" in checkboxes
+            meal.grains = "grains" in checkboxes
+            meal.dairy = "dairy" in checkboxes
+            meal.fats = "fats" in checkboxes
 
-        meal.save()
+            meal.save()
+        except: 
+            render(request, "food/edit.html", {'meal': meal, 'error': "please enter valid values in all fields"})
 
         return HttpResponseRedirect("/food/")   
 

@@ -5,8 +5,6 @@
 {% block content %}
   <!-- todo: changing image, today shortcut button -->
   <div class="section center">
-
-    <a class="back" href="{% url 'home' %}">< back</a>
     <div class="center">
       <div class="alt-label-text center flex-column" id="current-date" onclick="update(new Date())">add food</div>
     </div>
@@ -15,7 +13,7 @@
 
       <div class="center flex-column margin">
         <div class="flex-row">
-          <input type="checkbox">
+          <input id="cal-check" type="checkbox">
           <p class="label-text">&nbsp;cal in</p>
         </div>
         <div class="dark-stylized big-text no-margin" id="kcal"></div>
@@ -24,16 +22,14 @@
 
       <div class="center flex-column margin">
         <div class="flex-row center">
-          <input type="checkbox">
+          <input id="protein-g-check" type="checkbox">
           <p class="label-text">&nbsp;protein</p>
         </div>
         <div class="dark-stylized big-text no-margin" id="protein_g"></div>
         <div class="dark-label-text">goal:{{user.protein_goal_g}}</div>
       </div>
   
-      <div style="background-color: var(--darkest); height: 100%; margin: 10px; border-radius: 10px;">
-        (photo filler)
-      </div>
+      <img style="background-color: var(--darkest); max-height: 100px; margin: 10px; border-radius: 10px;" id="food-img" >
       
     </div>
 
@@ -79,6 +75,9 @@
   </div>
 
 <script>
+  let photos = []
+  let photo_index = 0;
+
   async function update(date){
     console.log("running function")
     var dd = String(date.getDate()).padStart(2, '0');
@@ -114,12 +113,23 @@
     document.querySelector('#veg-check > input').checked = json.veg >= {{user.veg_goal}};
     document.querySelector('#grains-check > input').checked = json.grains >= {{user.grains_goal}};
     document.querySelector('#dairy-check > input').checked = json.dairy >= {{user.dairy_goal}};
+    document.querySelector('#protein-g-check').checked = json.g_protein >= {{user.protein_goal_g}};
+    document.querySelector('#cal-check').checked = json.kcal >= {{user.cal_goal}};
 
-    if (json.photos.length != 0)
-      document.querySelector('#meal-img-main').setAttribute("src", json.photos[0]);
-    else
-      document.querySelector('#meal-img-main').removeAttribute("src");
+    photos = json['photos'];
+    console.log(photos)
   }
+
+  function updatePhoto(){
+    if (photos.length > 0){
+      photo_index = (photo_index + 1) % photos.length;
+      console.log(photos[photo_index])
+      document.querySelector("#food-img").src = photos[photo_index];
+    }
+  }
+
+  setInterval(updatePhoto, 1000);
+
 
   // get current data
   let today = new Date();
