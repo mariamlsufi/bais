@@ -42,8 +42,8 @@ class Sets(models.Model):
     intensity = models.DecimalField(decimal_places=2, max_digits=5)
 
 class Bests(models.Model):
-    workout = models.ForeignKey(Workouts,  on_delete=models.CASCADE)
-    exercise = models.ForeignKey(Exercises,  on_delete=models.CASCADE)
+    workout = models.ForeignKey(Workouts, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercises, on_delete=models.CASCADE)
     reps = models.IntegerField()
     intensity = models.DecimalField(decimal_places=2, max_digits=5)
 

@@ -3,91 +3,60 @@
 {% block title %}account info{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
 
-    {% if reports %}
-        <div class="flex-center">
-            <select id="report-type-selector">
-                <option value="daily">daily</option>
-                <option value="weekly">weekly</option>
-                <option value="monthly">monthly</option>
-                <option value="yearly">yearly</option>
-            </select>
-        </div>
-        {% for report in reports %}
-            <div class="report {{ report.type }} section flex-column center">
-                <a href="{{report.id}}/"> {{ report.start}} > </a>
-                <br>
-                <div class="center report-details flex-row" >
-                    <div class="flex-center flex-column center">
-                        <div class="label-text" style="text-align: center; margin-left: 5px;">avg improvement</div>
-                       <div class="dark-stylized big-text">{{ report.avg_improvement }}%</div>
-                    </div>
-                    <div class="flex-center flex-column center">
-                        <div class="label-text"  style="text-align: center; margin-left: 5px;">workouts complete</div>
-                        <div class="dark-stylized big-text">{{ report.workouts_completed }} </div>
-                    </div>
-                    <div class="center flex-column light-stylized big-text">
-                        {{ report.cal_in }} kcal
-                    </div>
-                </div>
+{% for report in reports %}
+
+    <div class="section">
+        <div class="bold" onclick="javascript:expandReport(this, '{{report.start_date}} - {{report.end_date}}')">{{report.start_date}} - {{report.end_date}} ></div>
+        <div hidden=true class="info">
+            <br>
+            <div class="flex-row">
+                <div class="dark-stylized">lifts % improvement: </div>
+                <div class="light-stylized">{{report.percent_improvement}}</div>
             </div>
-        {% endfor %}
-    {% else %}
-        <div class="section-darker"><p>you don't have any reports yet! check back later.</p></div>
-    {% endif %}
+            <div class="flex-row">
+                <div class="dark-stylized">num workouts</div>
+                <div class="light-stylized">{{report.num_workouts}}</div>
+            </div>
 
-{% else %}
-  <div class="section-darker flex-column">
-    <h4>you're not currently logged in</h4>
-    <a class="light-button" href="{% url 'login' %}">log in</a>
-  </div>
-{% endif %}
+            <div class="flex-row flex-around center">
+                <div>cal in: {{report.cal_in}}</div>
+                <div>g protein: {{report.g_protein}}</div>
+            </div>
+
+            <br>
+
+            <table class="label-text width-100 center" style="text-align: left">
+                <tr>
+                  <td id="fruit-check" ><input type="checkbox"> veg {{report.fruit}}/{{fruit_goal}}</td>
+                  <td id="veg-check" ><input type="checkbox"> veg {{report.veg}}/{{veg_goal}}</td>
+                </tr>
+                <tr class="no-margin no-padding">
+                  <td id="protein-check"><input type="checkbox"> protein {{report.protein}}/{{protein_goal}}</td>
+                  <td id="grains-check"><input type="checkbox"> grains {{report.grains}}/{{grains_goal}}</td>
+                </tr>
+                <tr class="no-margin no-padding">
+                  <td id="fats-check" ><input type="checkbox"> fats {{report.fats}}/{{fats_goal}}</td>
+                  <td id="dairy-check" ><input type="checkbox"> dairy {{report.dairy}}/{{dairy_goal}}</td>
+                </tr>
+              </table>
+        </div>
+    </div>
+
+{% endfor %}
 
 <script>
-    const details = document.querySelectorAll(".report-details");
-    for (let i = 1; i < details.length; i++){
-        details[i].style.display = "none";
-    }
-
-    var functions = {
-        daily: function(){
-            const details = document.querySelectorAll(".d");
-            for (let i = 1; i < details.length; i++){
-                details[i].style.display = "flex";
-            }
-        },
-        weekly: function(){
-            const details = document.querySelectorAll(".w");
-            for (let i = 1; i < details.length; i++){
-                details[i].style.display = "flex";
-            }
-        },
-        monthly: function(){
-            const details = document.querySelectorAll(".m");
-            for (let i = 1; i < details.length; i++){
-                details[i].style.display = "flex";
-            }
-        },
-        yearly: function(){
-            const details = document.querySelectorAll(".y");
-            for (let i = 1; i < details.length; i++){
-                details[i].style.display = "flex";
-            }
-        },
-    }
-
-    $( "select" )
-    .change(function () {
-        const details = document.querySelectorAll(".report");
-        for (let i = 1; i < details.length; i++){
-            details[i].style.display = "none";
+    function expandReport(e, text){
+        var info = e.parentNode.querySelector(".info");
+        if (e.innerHTML != text + " v"){
+            e.innerHTML = text + " v"
+            info.hidden = false;
         }
-
-        var selected = $( "select option:selected" );
-        functions[selected.val()]();
-    })
-    .change();
-
+        else {
+            e.innerHTML = text + " >"
+            info.hidden = true;
+        }
+    }
 </script>
+
 {% endblock %}

@@ -1,6 +1,8 @@
 # accounts/models.py
+import django
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from datetime import date
 
 class CustomUser(AbstractUser):
     # misc
@@ -23,6 +25,9 @@ class CustomUser(AbstractUser):
     protein_goal_g = models.IntegerField(default=100)
 
     cal_goal = models.IntegerField(default=2000)
+
+    # user created
+    date_created = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.username
