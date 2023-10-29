@@ -7,7 +7,7 @@
   <div class="section center" >
     <a>your workouts</a>
     <br>
-    <div class=" flex-row" style="flex-wrap: wrap;">
+    <div class=" flex-row center flex-around" style="flex-wrap: wrap;">
       {% for workout in workouts %}
       <div class="center flex-column">
         <a class="label-text" href="{{workout.pk}}/">{{ workout.label}} > </a>
