@@ -121,10 +121,11 @@
         data: chart_data,
       }])
 
-      console.log(chart_data);
-
-      document.getElementById("summary").innerHTML = "average: " + Math.round(sum/days);
-      document.getElementById("graph-label").innerHTML = type;
+      if (isNaN(average)){
+      average = '~'
+    }
+    document.getElementById("summary").innerHTML = "average: " + average;
+    document.getElementById("graph-label").innerHTML = type;
     }
 
     change();

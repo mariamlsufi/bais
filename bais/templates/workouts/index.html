@@ -24,4 +24,134 @@
     </div>
 </div>
 
+<div class="section center flex-column">
+  <div class="center">
+    <a href="{% url 'workout-progress' %}">your progress ></a>
+  </div>
+
+  <div class="light-stylized big-text no-margin" id="graph-label"></div>
+
+  <div class="" id="chart">
+  </div>
+
+  <div class="flex-row">
+    <select onchange="change()" id="daySelect">
+      <option value="7">last week</option>
+      <option value="14">last two weeks</option>
+      <option value="30">last month</option>
+      <option value="180">last six months</option>
+      <option value="365">last year</option>
+    </select>
+
+    <select onchange="change()" id="typeSelect">
+        {% for exercise in exercises %}
+            <option value="{{exercise}}">{{exercise}}</option>
+        {% endfor %}
+    </select>
+  </div>
+
+  <div class="dark-stylized big-text" id="summary"></div>
+
+  <div class="label-text width-80 center" style="text-align: center;">measured in volume: reps x intensity</div>
+
+
+</div>
+
+<script>
+
+  Apex.colors = ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+  var options = {
+        series: [{
+        data: []
+      }],
+        chart: {
+        type: 'bar',
+        height: 100,
+        toolbar: {
+          show: false,
+        }
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      dataLabels: {
+        enabled: false,
+        style: {
+          colors: ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+        }
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        labels: {
+          show: false,
+        }
+      },
+      yaxis: {
+        style: {
+          colors: ['{{user.darkest}}', '#{{user.darker}}', '#{{user.lighter}}', '#{{user.lightest}}']
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        enabled: false,
+      },
+      legend: {
+        show: false,
+      },
+      grid: {
+        show: false,
+      }
+      };
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+
+  async function change(){
+    var days = document.getElementById("daySelect").value;
+    var type = document.getElementById("typeSelect").value;
+    const response = await fetch("/workouts/progress/data/?days=" + days);
+    const json = await response.json();
+
+
+    chart_data = [0, ];
+    var sum = 0;
+    var days = 0;
+    for (var i = json["data"].length - 1; i >= 0; i--){ // for each day
+      if (json["data"][i][type]) {
+          chart_data.push(json["data"][i][type]);
+          sum +=  json["data"][i][type];
+          days++;
+      }
+    }
+
+    console.log(json["data"])
+    console.log(chart_data)
+
+    chart.updateSeries([{
+      data: chart_data,
+    }])
+
+    console.log(chart_data);
+
+    var average = Math.round(sum/days);
+    if (isNaN(average)){
+      average = '~'
+    }
+    document.getElementById("summary").innerHTML = "average: " + average;
+    document.getElementById("graph-label").innerHTML = type;
+  }
+
+  change();
+
+</script>
+
 {% endblock %}

@@ -19,7 +19,7 @@ class WorkoutDates(models.Model):
     workout = models.ForeignKey(Workouts,  on_delete=models.CASCADE)
 
 class Exercises(models.Model):
-    label = models.CharField(max_length=20, unique=True)
+    label = models.CharField(max_length=20)
      
     UNITS = (
         ('lbs', 'lbs'),
@@ -41,6 +41,11 @@ class Sets(models.Model):
     reps = models.IntegerField()
     intensity = models.DecimalField(decimal_places=2, max_digits=5)
 
-class Bests(Sets):
+class Bests(models.Model):
+    workout = models.ForeignKey(Workouts,  on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercises,  on_delete=models.CASCADE)
+    reps = models.IntegerField()
+    intensity = models.DecimalField(decimal_places=2, max_digits=5)
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_added = models.DateField(auto_now=True)

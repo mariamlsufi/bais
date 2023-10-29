@@ -192,3 +192,13 @@ def ProgressData(request):
 
 def Progress(request):
     return render(request, "food/progress.html")
+
+def Delete(request, id):
+    if (request.user.is_authenticated):
+        user = get_object_or_404(CustomUser, id=request.user.id)
+        meal = get_object_or_404(Meals, pk=id)
+
+        if (meal.user == user):
+            meal.delete()
+
+    return HttpResponseRedirect("/food/")

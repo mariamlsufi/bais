@@ -21,7 +21,6 @@ class Report(models.Model):
 
 
     start = models.DateField()
-    end = models.DateField()
 
     avg_improvement = models.DecimalField(decimal_places=2, max_digits=10)
     workouts_completed = models.IntegerField()
@@ -35,5 +34,3 @@ class Report(models.Model):
     grains = models.IntegerField()
 
     cal_in = models.IntegerField()
-    cal_out = models.IntegerField()
-    net = models.IntegerField()

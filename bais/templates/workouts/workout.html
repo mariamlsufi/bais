@@ -5,10 +5,10 @@
 {% block content %}
 {% if user.is_authenticated %}  
 
-  <form class="section" action="" method="post">
+  <form class="section center" action="" method="post">
     <a class="back" href="{% url 'workouts_index' %}">< back</a>
     <br>
-    <div class="center flex-between">
+    <div class="center flex-between width-100">
       <div class="alt-label-text">{{workout.label}}</div>
       <div class="label-text">today's bests</div>
     </div>
@@ -20,11 +20,13 @@
     {% for exercise in exercises %}
         <div class="flex-column width-100" >
            <div class="width-100 flex-row flex-between">
-              <div>
+              <div style="overflow-x: scroll; max-width: 150px;" class="flex-row">
                 <input type="checkbox"> {{exercise.label}}
               </div>
               <div>
-                <input type="number" name="{{exercise.label}}_reps" class="input-short">x<input type="number" name="{{exercise.label}}_intensity" class="input-short">
+                <input type="number" required="true" name="{{exercise.label}}_reps" class="input-short" value="0">
+                 x
+                <input type="number" required="true" name="{{exercise.label}}_intensity" class="input-short" value="0"> {{exercise.units}}
               </div>
            </div>
     
@@ -42,10 +44,9 @@
 
     <br>
 
-    <div class="flex-row width-100 flex-around">
-      <a href="edit/"><button class="light-button" type="button">full edit</button></a>
-        <input type="submit" class="dark-button" value="finished!">
-        <button type="button" class="light-button">quick edit</button>
+    <div class="flex-row width-80 flex-around">
+        <input type="submit" class="dark-button" value="finish and update">
+        <!--<button type="button" class="light-button">quick edit</button>-->
     </div>
       
     </div>

@@ -86,19 +86,15 @@
             var matched = false;
             // test if matching href
             for (var i = 0; i < nav_links.length; i++){
-                if (nav_links[i].href == window.location.href){
+                if ( i != 2 && nav_links[i].href == window.location.href.substring(0, nav_links[i].href.length)){
                     nav_links[i].className += " selected";
                     matched = true;
                 }
-                
             }
             if (!matched){
-                for (var i = 0; i < nav_links.length; i++){
-                    if (String(nav_links[i].href).indexOf(String(window.location.href)) >= 0 ){
-                        nav_links[i].className += " selected";
-                    }   
-                }
+                nav_links[2].className += " selected";
             }
+            
 
         </script>
 
